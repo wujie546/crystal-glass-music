@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="頂級 AI MV 影像製作招商網站 - 結合生成式 AI 藝術與前衛影音美學，為唱片公司、品牌與音樂人打造好萊塢級音樂錄影帶。">
+  <title>VIBE AI | 頂級 AI MV 影像製作招商平台</title>
+  
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ==========================================
+       1. Intro Portal Overlay (Gate Screen)
+       ========================================== -->
+  <div id="portal-overlay">
+    <div class="portal-container">
+      <div class="portal-title-sub">AI GENERATIVE MUSIC VIDEO</div>
+      <h1 class="portal-title">開啟 VIBE_AI<br>視覺盛宴</h1>
+      <p class="portal-desc">
+        本網站使用全螢幕高解析度 AI 生成影片作為背景，並包含背景音軌。<br>
+        為了獲得最佳的影音體驗，請點擊下方按鈕以啟動高畫質音效與視覺特效。
+      </p>
+      <button class="portal-btn" id="enter-btn">開啟體驗 ENTER</button>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       2. Full Screen Video Background
+       ========================================== -->
+  <div class="video-bg-container" id="video-bg-container">
+    <!-- The YouTube Iframe will be injected here via JavaScript API -->
+    <div id="youtube-bg"></div>
+  </div>
+  <!-- Vignette gradient on top of video to ensure text readability -->
+  <div class="vignette-overlay"></div>
+
+  <!-- ==========================================
+       3. Header & Navigation
+       ========================================== -->
+  <header id="header">
+    <a href="#hero" class="logo">
+      VIBE<span>AI</span>
+    </a>
+    <nav>
+      <ul>
+        <li><a href="#hero" class="active">首頁</a></li>
+        <li><a href="#advantages">技術優勢</a></li>
+        <li><a href="#gallery">風格畫廊</a></li>
+        <li><a href="#cooperation">招商方案</a></li>
+        <li><a href="#portfolio">作品集</a></li>
+        <li><a href="#contact">合作諮詢</a></li>
+      </ul>
+    </nav>
+    <a href="#contact" class="header-cta">合作洽談</a>
+  </header>
+
+  <!-- ==========================================
+       4. Hero Section
+       ========================================== -->
+  <section id="hero">
+    <div class="hero-content">
+      <div class="hero-tagline">AI MV Production Investment Plan</div>
+      <h1 class="hero-title">用 AI 重塑音樂視覺<br>以科技啟迪藝術靈魂</h1>
+      <p class="hero-description">
+        打破傳統 MV 製作的高昂成本與時程限制。透過深度學習生成式 AI 演算法，將音樂旋律、歌詞意境轉化為驚艷全球的視覺景觀。我們正在尋求唱片品牌、獨立音樂人與跨界贊助商，共同開拓數位影像的新紀元。
+      </p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn-primary">立即預約諮詢</a>
+        <a href="#portfolio" class="btn-secondary">瀏覽作品集</a>
+      </div>
+    </div>
+
+    <!-- Background music & video controls -->
+    <div class="media-dashboard">
+      <button class="dashboard-btn" id="play-pause-btn" aria-label="播放與暫停影片">
+        <!-- Play Icon (SVG) -->
+        <svg id="play-icon" style="display:none;" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        <!-- Pause Icon (SVG) -->
+        <svg id="pause-icon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+      </button>
+      <button class="dashboard-btn" id="volume-btn" aria-label="切換靜音狀態">
+        <!-- Mute Icon (SVG) -->
+        <svg id="mute-icon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77zM3 9v6h4l5 5V4L7 9H3z"/></svg>
+        <!-- Unmute Icon (SVG) -->
+        <svg id="unmute-icon" style="display:none;" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 12c0-1.1-.9-2-2-2s-2 .9-2 2 .9 2 2 2 2-.9 2-2zm-2-9c-1.1 0-2 .9-2 2v2c0 1.1.9 2 2 2s2-.9 2-2V5c0-1.1-.9-2-2-2zm-8.8 8.8L3 18.2V21h2.8l6.4-6.4-3.4-3.4zM21 21H3v-1.8l13.2-13.2h2L21 9v12z"/></svg>
+      </button>
+      <div class="dashboard-info" id="bg-info">音效：靜音中</div>
+    </div>
+
+    <!-- Scroll down mouse animation -->
+    <a href="#advantages" class="scroll-down">
+      <span>往下探索</span>
+      <div class="scroll-down-mouse">
+        <div class="scroll-down-wheel"></div>
+      </div>
+    </a>
+  </section>
+
+  <!-- ==========================================
+       5. Technical Advantages Section
+       ========================================== -->
+  <section id="advantages">
+    <div class="section-header">
+      <span class="section-tagline">Core Strength</span>
+      <h2 class="section-title">重構影像工業的四大維度</h2>
+    </div>
+    
+    <div class="advantages-grid">
+      <!-- Card 1 -->
+      <div class="advantage-card">
+        <div class="adv-icon">
+          <!-- Timer Icon (SVG) -->
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <h3 class="adv-title">極速影像生成</h3>
+        <p class="adv-desc">
+          大幅縮短前期籌備與後期渲染。傳統音樂錄影帶需要數週乃至數月的時間進行籌劃與特效製作，而 AI 音樂生成技術能將製作週期縮減至 3-5 天，讓音樂發行與宣傳步調完美同步。
+        </p>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="advantage-card">
+        <div class="adv-icon">
+          <!-- Palette Icon (SVG) -->
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 14.7255 3.09032 17.1962 4.85857 19C5.03349 19.1749 5.25367 19.3039 5.49842 19.3749C5.89736 19.4907 6.29194 19.2312 6.38 18.83C6.55 18.06 7.23 17.5 8 17.5C8.83 17.5 9.5 18.17 9.5 19C9.5 20.66 10.84 22 12 22Z"/></svg>
+        </div>
+        <h3 class="adv-title">無限藝術風格</h3>
+        <p class="adv-desc">
+          不管是賽博龐克、超現實主義、寫實電影感，還是水彩插畫與 3D 渲染，AI 都能根據音軌的頻率與情緒，即時調整色彩與光學物理折射，為每首歌曲量身打造無二的視覺靈魂。
+        </p>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="advantage-card">
+        <div class="adv-icon">
+          <!-- Dollar Icon (SVG) -->
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <h3 class="adv-title">極致成本優勢</h3>
+        <p class="adv-desc">
+          無需昂貴的棚景租借、龐大的劇組團隊或繁複的 CG 後期渲染。我們透過領先的影片生成模型，降低近 80% 的製作開銷，讓獨立音樂人與中小型廠牌也能擁有百萬級別的 MV 質感。
+        </p>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="advantage-card">
+        <div class="adv-icon">
+          <!-- Target Icon (SVG) -->
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+        </div>
+        <h3 class="adv-title">智慧招商廣告植入</h3>
+        <p class="adv-desc">
+          創新變現方案。AI 可在生成過程中，將品牌商標、產品特徵或贊助元素無縫融入故事場景與背景中，不再有傳統廣告的突兀感，為音樂與廣告主創造高價值的雙贏變現管道。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       6. Style Gallery Section
+       ========================================== -->
+  <section id="gallery">
+    <div class="section-header">
+      <span class="section-tagline">Visual Library</span>
+      <h2 class="section-title">探索多元化 AI 影像流派</h2>
+    </div>
+
+    <div class="gallery-grid">
+      <!-- Card 1 -->
+      <div class="gallery-card gallery-card-01">
+        <div class="gallery-card-content">
+          <span class="gallery-style-label">流派 01</span>
+          <h3 class="gallery-style-title">賽博龐克幻境</h3>
+          <p class="gallery-style-desc">霓虹光影與雨後街區的電子共振，展現科技感冷冽與生命溫度的碰撞。</p>
+        </div>
+      </div>
+      <!-- Card 2 -->
+      <div class="gallery-card gallery-card-02">
+        <div class="gallery-card-content">
+          <span class="gallery-style-label">流派 02</span>
+          <h3 class="gallery-style-title">超現實奇旅</h3>
+          <p class="gallery-style-desc">重力反轉與夢境意識流的視覺具象化，讓粒子與沙漏訴說時間的故事。</p>
+        </div>
+      </div>
+      <!-- Card 3 -->
+      <div class="gallery-card gallery-card-03">
+        <div class="gallery-card-content">
+          <span class="gallery-style-label">流派 03</span>
+          <h3 class="gallery-style-title">日系唯美動漫</h3>
+          <p class="gallery-style-desc">新海誠式手繪光影與極致青春色彩，用二次元濾鏡留住最動人的瞬間。</p>
+        </div>
+      </div>
+      <!-- Card 4 -->
+      <div class="gallery-card gallery-card-04">
+        <div class="gallery-card-content">
+          <span class="gallery-style-label">流派 04</span>
+          <h3 class="gallery-style-title">古典與水彩</h3>
+          <p class="gallery-style-desc">流動的油畫筆觸與水墨煙雨的詩意留白，賦予旋律典雅幽遠的意境。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       7. Cooperation Tiers Section
+       ========================================== -->
+  <section id="cooperation">
+    <div class="section-header">
+      <span class="section-tagline">Partnership Programs</span>
+      <h2 class="section-title">招商合作與投資方案</h2>
+    </div>
+
+    <div class="tiers-grid">
+      <!-- Tier 1 -->
+      <div class="tier-card">
+        <div class="tier-header">
+          <h3 class="tier-title">歌手與音樂人方案</h3>
+          <p class="tier-subtitle">適合獨立歌手、獨立樂團與新興創作者</p>
+        </div>
+        <ul class="tier-features">
+          <li>完整 4 分鐘高畫質 AI MV 製作</li>
+          <li>3 組宣傳用直式 Shorts 影像</li>
+          <li>4K Ultra HD 解析度輸出</li>
+          <li>依音軌情緒量身定制專屬風格</li>
+          <li>首次合作享作品集展示優先權</li>
+        </ul>
+        <a href="#contact" class="tier-btn tier-btn-secondary">立即洽談</a>
+      </div>
+
+      <!-- Tier 2 (Featured) -->
+      <div class="tier-card featured">
+        <span class="featured-tag">熱門方案</span>
+        <div class="tier-header">
+          <h3 class="tier-title">唱片公司統包合約</h3>
+          <p class="tier-subtitle">適合唱片廠牌、經濟合約與年度發片計畫</p>
+        </div>
+        <ul class="tier-features">
+          <li>年度 8 首單曲 AI MV 全程策劃</li>
+          <li>一對一資深視覺導演溝通與監製</li>
+          <li>AI 植入技術 (商標/產品自然融合)</li>
+          <li>綠色通道：下單後 2 天內交付首稿</li>
+          <li>支援全平台行銷影像格式衍生</li>
+        </ul>
+        <a href="#contact" class="tier-btn tier-btn-primary">獲取報價</a>
+      </div>
+
+      <!-- Tier 3 -->
+      <div class="tier-card">
+        <div class="tier-header">
+          <h3 class="tier-title">代理與管道合作</h3>
+          <p class="tier-subtitle">適合廣告公司、影音工作室與行銷代理商</p>
+        </div>
+        <ul class="tier-features">
+          <li>獲取低至 7 折的內部管道合作價</li>
+          <li>專屬招商 Demo 工具包與作品授權</li>
+          <li>提案技術支援與協同談判</li>
+          <li>高額佣金返還與年度返點計畫</li>
+          <li>共同品牌行銷與聯合發布推廣</li>
+        </ul>
+        <a href="#contact" class="tier-btn tier-btn-secondary">加入代理</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       8. Portfolio Showcase Section
+       ========================================== -->
+  <section id="portfolio">
+    <div class="section-header">
+      <span class="section-tagline">Portfolio Showcase</span>
+      <h2 class="section-title">AI MV 精選作品展示</h2>
+    </div>
+
+    <div class="portfolio-grid">
+      <!-- Video 1 -->
+      <div class="portfolio-card portfolio-card-01">
+        <div class="shorts-container">
+          <div class="shorts-crop-wrapper">
+            <iframe 
+              id="short-player-1" 
+              src="https://www.youtube.com/embed/fux2Udz-OEg?autoplay=1&mute=1&loop=1&playlist=fux2Udz-OEg&controls=0&modestbranding=1&rel=0&iv_load_policy=3&playsinline=1&enablejsapi=1" 
+              title="AI MV 作品 - 幻境重構" 
+              allow="autoplay; encrypted-media" 
+              loading="lazy">
+            </iframe>
+          </div>
+          <!-- Block interaction with iframe to prevent opening youtube app -->
+          <div class="shorts-interaction-blocker"></div>
+        </div>
+        <div class="shorts-detail-card">
+          <span class="shorts-style-tag">Style: Neon Surrealism</span>
+          <h3 class="shorts-title">幻境重構：量子迷音</h3>
+          <p class="shorts-desc">
+            將旋律解構為數百萬個量子發光微粒。影片呈現人類意識在數位雲端中的重組與昇華，完美契合迷幻電子與獨立音樂的節奏。
+          </p>
+        </div>
+      </div>
+
+      <!-- Video 2 -->
+      <div class="portfolio-card portfolio-card-02">
+        <div class="shorts-container">
+          <div class="shorts-crop-wrapper">
+            <iframe 
+              id="short-player-2" 
+              src="https://www.youtube.com/embed/iRpgsOfbJQw?autoplay=1&mute=1&loop=1&playlist=iRpgsOfbJQw&controls=0&modestbranding=1&rel=0&iv_load_policy=3&playsinline=1&enablejsapi=1" 
+              title="AI MV 作品 - 賽博荒野" 
+              allow="autoplay; encrypted-media" 
+              loading="lazy">
+            </iframe>
+          </div>
+          <div class="shorts-interaction-blocker"></div>
+        </div>
+        <div class="shorts-detail-card">
+          <span class="shorts-style-tag">Style: Cyberpunk Cinematic</span>
+          <h3 class="shorts-title">賽博紀元：霓虹荒野</h3>
+          <p class="shorts-desc">
+            融合未來主義都市與流體光學動力。影片捕捉夜雨下霓虹光影在金屬反射面上的即時折射，生動詮釋科技冷冽與生命溫度的碰撞。
+          </p>
+        </div>
+      </div>
+
+      <!-- Video 3 -->
+      <div class="portfolio-card portfolio-card-03">
+        <div class="shorts-container">
+          <div class="shorts-crop-wrapper">
+            <iframe 
+              id="short-player-3" 
+              src="https://www.youtube.com/embed/N7Fb-RkPLcA?autoplay=1&mute=1&loop=1&playlist=N7Fb-RkPLcA&controls=0&modestbranding=1&rel=0&iv_load_policy=3&playsinline=1&enablejsapi=1" 
+              title="AI MV 作品 - 時空回聲" 
+              allow="autoplay; encrypted-media" 
+              loading="lazy">
+            </iframe>
+          </div>
+          <div class="shorts-interaction-blocker"></div>
+        </div>
+        <div class="shorts-detail-card">
+          <span class="shorts-style-tag">Style: Classical Collage</span>
+          <h3 class="shorts-title">時空回聲：記憶拼貼</h3>
+          <p class="shorts-desc">
+            將文藝復興古典美學與超現實立體剪貼進行智能整合。粒子沙漏與融化時鐘的視覺隱喻，適合後搖滾 (Post-Rock) 及民謠悠遠意境。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       9. Contact / Lead Capturing Form Section
+       ========================================== -->
+  <section id="contact">
+    <div class="contact-container">
+      <div class="contact-info">
+        <h3>啟動您的 AI 視覺企劃</h3>
+        <p>
+          不論您是需要一首充滿視覺張力的單曲 MV，還是正在尋求全方位的品牌行銷合作方案，我們的 AI 影像導演與技術團隊隨時為您提供支持。請填寫右側表單，我們將在 24 小時內聯絡您，安排免費的專屬視覺策劃提案。
+        </p>
+        
+        <div class="contact-details">
+          <!-- Item 1 -->
+          <div class="contact-item">
+            <div class="contact-icon">✉</div>
+            <div class="contact-text">
+              <h4>電子郵件</h4>
+              <p>contact@vibeai-studio.com</p>
+            </div>
+          </div>
+          <!-- Item 2 -->
+          <div class="contact-item">
+            <div class="contact-icon">✆</div>
+            <div class="contact-text">
+              <h4>商務洽談</h4>
+              <p>+886 2 2345 6789 (週一至週五 10:00 - 19:00)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form-card">
+        <form id="lead-form">
+          <div class="form-group">
+            <label for="contact-name">您的姓名 / 聯絡人</label>
+            <input type="text" id="contact-name" placeholder="例如：王小明" required>
+          </div>
+          <div class="form-group">
+            <label for="contact-email">電子信箱</label>
+            <input type="email" id="contact-email" placeholder="name@company.com" required>
+          </div>
+          <div class="form-group">
+            <label for="contact-company">公司 / 音樂廠牌 / 樂團名稱</label>
+            <input type="text" id="contact-company" placeholder="例如：Vibe Music" required>
+          </div>
+          <div class="form-group">
+            <label for="contact-tier">感興趣的合作方案</label>
+            <select id="contact-tier" required>
+              <option value="" disabled selected>請選擇一個方案...</option>
+              <option value="artist">歌手與音樂人方案</option>
+              <option value="label">唱片公司統包合約</option>
+              <option value="agency">代理與管道合作</option>
+              <option value="other">其他客製化專案</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="contact-msg">您的專案構想或留言</label>
+            <textarea id="contact-msg" rows="4" placeholder="請描述您的歌曲風格、發行時程或贊助構想..." required></textarea>
+          </div>
+          <button type="submit" class="form-btn">送出諮詢申請</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       10. Footer
+       ========================================== -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#hero" class="footer-logo">VIBE<span>AI</span></a>
+        <p>用先進 AI 生成模型與高階光學渲染，重塑音樂影音的新美學標準。</p>
+      </div>
+      <div class="footer-links">
+        <h5>導覽頁面</h5>
+        <ul>
+          <li><a href="#hero">首頁</a></li>
+          <li><a href="#advantages">技術優勢</a></li>
+          <li><a href="#gallery">風格畫廊</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h5>合作專區</h5>
+        <ul>
+          <li><a href="#cooperation">招商方案</a></li>
+          <li><a href="#portfolio">作品集</a></li>
+          <li><a href="#contact">聯絡我們</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 VIBE AI Studio. All Rights Reserved. Designed by Antigravity.</p>
+      <div class="social-links">
+        <a href="#" class="social-icon" aria-label="Youtube">YT</a>
+        <a href="#" class="social-icon" aria-label="Instagram">IG</a>
+        <a href="#" class="social-icon" aria-label="Twitter">TW</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- YouTube IFrame API Loader -->
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <!-- Main Script -->
+  <script src="script.js"></script>
+</body>
+</html>

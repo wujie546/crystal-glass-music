@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小畫家</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: "Microsoft JhengHei", "微軟正黑體", sans-serif; background: #f0f0f0; overflow: hidden; height: 100vh; display: flex; flex-direction: column; }
+
+/* 選單列 */
+.menubar { background: #f5f5f5; border-bottom: 1px solid #ccc; padding: 2px 8px; display: flex; gap: 4px; font-size: 13px; }
+.menubar button { background: none; border: none; padding: 4px 10px; cursor: pointer; border-radius: 3px; font-size: 13px; }
+.menubar button:hover { background: #e0e0e0; }
+
+/* 工具列 */
+.toolbar { background: #f5f5f5; border-bottom: 1px solid #ccc; padding: 6px 8px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; min-height: 64px; }
+.tool-group { display: flex; gap: 2px; align-items: center; padding: 0 6px; border-right: 1px solid #ddd; }
+.tool-group:last-child { border-right: none; }
+.tool-group label { font-size: 12px; color: #555; margin-right: 4px; white-space: nowrap; }
+
+.tool-btn { width: 36px; height: 36px; border: 2px solid transparent; border-radius: 4px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; background: white; transition: all 0.15s; }
+.tool-btn:hover { border-color: #4A90D9; background: #E8F0FE; }
+.tool-btn.active { border-color: #4A90D9; background: #D0E0F7; }
+.tool-btn svg { width: 22px; height: 22px; }
+
+/* 色彩面板 */
+.color-panel { display: flex; gap: 3px; align-items: center; }
+.color-swatch { width: 20px; height: 20px; border: 1px solid #999; cursor: pointer; border-radius: 2px; }
+.color-swatch:hover { transform: scale(1.2); z-index: 1; }
+.color-preview { display: flex; gap: 4px; margin-right: 6px; position: relative; width: 40px; height: 36px; }
+.color-fg { width: 26px; height: 26px; border: 2px solid #666; position: absolute; top: 0; left: 0; z-index: 2; cursor: pointer; }
+.color-bg { width: 26px; height: 26px; border: 2px solid #666; position: absolute; bottom: 0; right: 0; z-index: 1; cursor: pointer; background: white; }
+
+input[type="range"] { width: 80px; }
+input[type="color"] { width: 30px; height: 26px; border: none; cursor: pointer; }
+.size-label { font-size: 12px; color: #333; min-width: 20px; text-align: center; }
+
+/* 畫布區 */
+.canvas-container { flex: 1; overflow: auto; position: relative; background: #808080; display: flex; justify-content: center; align-items: flex-start; padding: 10px; }
+canvas#mainCanvas { background: white; cursor: crosshair; box-shadow: 0 0 8px rgba(0,0,0,0.3); }
+canvas#overlayCanvas { position: absolute; pointer-events: none; }
+
+/* 狀態列 */
+.statusbar { background: #f5f5f5; border-top: 1px solid #ccc; padding: 2px 10px; font-size: 12px; color: #555; display: flex; justify-content: space-between; }
+
+/* 文字輸入 */
+.text-input-box { position: absolute; border: 2px dashed #4A90D9; background: rgba(255,255,255,0.9); padding: 4px; font-size: 16px; min-width: 100px; min-height: 30px; outline: none; z-index: 100; display: none; }
+.text-input-box:focus { border-color: #2060A0; }
+
+/* 下拉選單 */
+.dropdown { position: relative; }
+.dropdown-content { display: none; position: absolute; top: 100%; left: 0; background: white; border: 1px solid #ccc; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); min-width: 160px; z-index: 1000; }
+.dropdown-content.show { display: block; }
+.dropdown-content button { display: block; width: 100%; text-align: left; padding: 8px 12px; border: none; background: none; cursor: pointer; font-size: 13px; }
+.dropdown-content button:hover { background: #e8f0fe; }
+</style>
+</head>
+<body>
+
+<!-- 選單列 -->
+<div class="menubar">
+  <div class="dropdown">
+    <button onclick="toggleMenu('fileMenu')">檔案</button>
+    <div id="fileMenu" class="dropdown-content">
+      <button onclick="newCanvas()">開新檔案</button>
+      <button onclick="savePNG()">另存新檔 (PNG)</button>
+      <button onclick="saveJPG()">另存新檔 (JPG)</button>
+    </div>
+  </div>
+  <div class="dropdown">
+    <button onclick="toggleMenu('editMenu')">編輯</button>
+    <div id="editMenu" class="dropdown-content">
+      <button onclick="undo()">復原 (Ctrl+Z)</button>
+      <button onclick="redo()">重做 (Ctrl+Y)</button>
+      <button onclick="clearCanvas()">全部清除</button>
+    </div>
+  </div>
+  <div class="dropdown">
+    <button onclick="toggleMenu('viewMenu')">檢視</button>
+    <div id="viewMenu" class="dropdown-content">
+      <button onclick="zoomIn()">放大</button>
+      <button onclick="zoomOut()">縮小</button>
+      <button onclick="zoomReset()">還原大小</button>
+    </div>
+  </div>
+</div>
+
+<!-- 工具列 -->
+<div class="toolbar">
+  <!-- 工具 -->
+  <div class="tool-group">
+    <label>工具</label>
+    <button class="tool-btn active" data-tool="pencil" title="鉛筆" onclick="setTool('pencil')">
+      <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 000-1.41l-2.34-2.34a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" fill="currentColor"/></svg>
+    </button>
+    <button class="tool-btn" data-tool="brush" title="筆刷" onclick="setTool('brush')">
+      <svg viewBox="0 0 24 24"><path d="M7 14c-1.66 0-3 1.34-3 3 0 1.31-1.16 2-2 2 .92 1.22 2.49 2 4 2 2.21 0 4-1.79 4-4 0-1.66-1.34-3-3-3zm13.71-9.37l-1.34-1.34a1 1 0 00-1.41 0L9 12.25 11.75 15l8.96-8.96a1 1 0 000-1.41z" fill="currentColor"/></svg>
+    </button>
+    <button class="tool-btn" data-tool="eraser" title="橡皮擦" onclick="setTool('eraser')">
+      <svg viewBox="0 0 24 24"><path d="M16.24 3.56l4.95 4.94c.78.79.78 2.05 0 2.84L12.29 20.2a2 2 0 01-1.41.59H4.83c-.78 0-1.54-.31-2.12-.88L2.7 18.89a3 3 0 010-4.24l9.53-9.53a2 2 0 012.83-.01l1.18.5zM4.83 18.5h5.88L19 10.21l-2.93-2.93L7.88 15.47v3.03z" fill="currentColor"/></svg>
+    </button>
+    <button class="tool-btn" data-tool="fill" title="油漆桶" onclick="setTool('fill')">
+      <svg viewBox="0 0 24 24"><path d="M16.56 8.94L8.32.7a1 1 0 00-1.42 0L5.18 2.42a1 1 0 000 1.41l2.12 2.12-4.25 4.25a2 2 0 000 2.83l5.66 5.66a2 2 0 002.83 0l5.02-5.02a2 2 0 000-2.73zM2.12 16.56a2 2 0 000 2.83l1.41 1.41a2 2 0 002.83 0l8.49-8.49-2.83-2.83-9.9 7.08z" fill="currentColor"/><path d="M19 11.5s-2 2.17-2 3.5c0 1.1.9 2 2 2s2-.9 2-2c0-1.33-2-3.5-2-3.5z" fill="currentColor"/></svg>
+    </button>
+    <button class="tool-btn" data-tool="eyedropper" title="色彩选取" onclick="setTool('eyedropper')">
+      <svg viewBox="0 0 24 24"><path d="M20.71 5.63l-2.34-2.34a1 1 0 00-1.41 0l-3.54 3.54-1.41-1.41-1.42 1.41 1.42 1.42-7.08 7.08a1 1 0 000 1.41l3.53 3.54a1 1 0 001.41 0l7.08-7.08 1.41 1.42 1.42-1.42-1.42-1.41 3.54-3.54a1 1 0 000-1.41zM6.17 17.41l-2.12-2.12 5.66-5.66 2.12 2.12-5.66 5.66z" fill="currentColor"/></svg>
+    </button>
+  </div>
+
+  <!-- 形狀 -->
+  <div class="tool-group">
+    <label>形狀</label>
+    <button class="tool-btn" data-tool="line" title="直線" onclick="setTool('line')">
+      <svg viewBox="0 0 24 24"><line x1="5" y1="19" x2="19" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+    </button>
+    <button class="tool-btn" data-tool="rect" title="矩形" onclick="setTool('rect')">
+      <svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+    </button>
+    <button class="tool-btn" data-tool="ellipse" title="橢圓" onclick="setTool('ellipse')">
+      <svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="9" ry="7" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+    </button>
+    <button class="tool-btn" data-tool="triangle" title="三角形" onclick="setTool('triangle')">
+      <svg viewBox="0 0 24 24"><polygon points="12,4 22,20 2,20" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+    </button>
+    <button class="tool-btn" data-tool="roundrect" title="圓角矩形" onclick="setTool('roundrect')">
+      <svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="4" ry="4" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+    </button>
+  </div>
+
+  <!-- 筆刷大小 -->
+  <div class="tool-group">
+    <label>大小</label>
+    <input type="range" id="brushSize" min="1" max="50" value="3" oninput="updateSizeLabel()">
+    <span class="size-label" id="sizeLabel">3</span>
+  </div>
+
+  <!-- 形狀選項 -->
+  <div class="tool-group" id="shapeOptions" style="display:none;">
+    <label>填充</label>
+    <select id="shapeFill" onchange="shapeFillMode=this.value">
+      <option value="stroke">僅外框</option>
+      <option value="fill">僅填充</option>
+      <option value="both">外框+填充</option>
+    </select>
+  </div>
+
+  <!-- 文字選項 -->
+  <div class="tool-group" id="textOptions" style="display:none;">
+    <label>字型</label>
+    <select id="textFont">
+      <option value="微軟正黑體">微軟正黑體</option>
+      <option value="新細明體">新細明體</option>
+      <option value="標楷體">標楷體</option>
+      <option value="Arial">Arial</option>
+      <option value="Times New Roman">Times New Roman</option>
+      <option value="Courier New">Courier New</option>
+    </select>
+    <input type="number" id="textSize" value="20" min="8" max="200" style="width:50px;">
+  </div>
+
+  <!-- 文字工具 (獨立) -->
+  <div class="tool-group">
+    <button class="tool-btn" data-tool="text" title="文字" onclick="setTool('text')">
+      <svg viewBox="0 0 24 24"><text x="5" y="18" font-size="18" font-weight="bold" fill="currentColor">A</text></svg>
+    </button>
+  </div>
+
+  <!-- 色彩 -->
+  <div class="tool-group">
+    <label>色彩</label>
+    <div class="color-preview">
+      <div class="color-fg" id="colorFG" style="background:#000000" onclick="document.getElementById('fgColorInput').click()"></div>
+      <div class="color-bg" id="colorBG" style="background:#FFFFFF" onclick="document.getElementById('bgColorInput').click()"></div>
+      <input type="color" id="fgColorInput" value="#000000" style="display:none" onchange="setFGColor(this.value)">
+      <input type="color" id="bgColorInput" value="#FFFFFF" style="display:none" onchange="setBGColor(this.value)">
+    </div>
+    <div class="color-panel" id="colorPalette"></div>
+  </div>
+</div>
+
+<!-- 畫布 -->
+<div class="canvas-container" id="canvasContainer">
+  <canvas id="mainCanvas" width="1000" height="700"></canvas>
+  <div class="text-input-box" id="textInput"></div>
+</div>
+
+<!-- 狀態列 -->
+<div class="statusbar">
+  <span id="statusPos">座標: 0, 0</span>
+  <span id="statusSize">畫布: 1000 x 700 | 筆刷: 3px</span>
+</div>
+
+<script>
+// ===== 狀態 =====
+const mainCanvas = document.getElementById('mainCanvas');
+const ctx = mainCanvas.getContext('2d');
+const container = document.getElementById('canvasContainer');
+
+let currentTool = 'pencil';
+let fgColor = '#000000';
+let bgColor = '#FFFFFF';
+let brushSize = 3;
+let shapeFillMode = 'stroke';
+let isDrawing = false;
+let startX, startY;
+let lastX, lastY;
+let zoomLevel = 1;
+
+// 復原/重做
+let history = [];
+let historyIndex = -1;
+const MAX_HISTORY = 50;
+
+// 暫存
+let tempCanvas, tempCtx;
+let snapshotData;
+
+// ===== 色彩面板 =====
+const paletteColors = [
+  '#000000','#808080','#800000','#808000','#008000','#008080','#000080','#800080',
+  '#FFFFFF','#C0C0C0','#FF0000','#FFFF00','#00FF00','#00FFFF','#0000FF','#FF00FF',
+  '#C08040','#FF8040','#00FF80','#80FFFF','#8080FF','#FF0080','#804000','#408000',
+  '#FF8080','#80FF80','#8080FF','#FF80C0','#FFFF80','#80FFFF','#804040','#404080'
+];
+
+const palette = document.getElementById('colorPalette');
+paletteColors.forEach(c => {
+  const swatch = document.createElement('div');
+  swatch.className = 'color-swatch';
+  swatch.style.background = c;
+  swatch.onclick = () => setFGColor(c);
+  swatch.oncontextmenu = (e) => { e.preventDefault(); setBGColor(c); };
+  palette.appendChild(swatch);
+});
+
+// ===== 工具設定 =====
+function setTool(tool) {
+  currentTool = tool;
+  document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
+  const btn = document.querySelector(`[data-tool="${tool}"]`);
+  if (btn) btn.classList.add('active');
+
+  // 顯示/隱藏選項
+  const shapeTools = ['line','rect','ellipse','triangle','roundrect'];
+  document.getElementById('shapeOptions').style.display = shapeTools.includes(tool) ? 'flex' : 'none';
+  document.getElementById('textOptions').style.display = tool === 'text' ? 'flex' : 'none';
+
+  // 游標
+  if (tool === 'fill') mainCanvas.style.cursor = 'crosshair';
+  else if (tool === 'eyedropper') mainCanvas.style.cursor = 'crosshair';
+  else if (tool === 'text') mainCanvas.style.cursor = 'text';
+  else mainCanvas.style.cursor = 'crosshair';
+
+  // 結束文字輸入
+  if (tool !== 'text') finishTextInput();
+}
+
+function setFGColor(c) {
+  fgColor = c;
+  document.getElementById('colorFG').style.background = c;
+  document.getElementById('fgColorInput').value = c;
+}
+
+function setBGColor(c) {
+  bgColor = c;
+  document.getElementById('colorBG').style.background = c;
+  document.getElementById('bgColorInput').value = c;
+}
+
+function updateSizeLabel() {
+  brushSize = parseInt(document.getElementById('brushSize').value);
+  document.getElementById('sizeLabel').textContent = brushSize;
+  document.getElementById('statusSize').textContent = `畫布: ${mainCanvas.width} x ${mainCanvas.height} | 筆刷: ${brushSize}px`;
+}
+
+// ===== 復原/重做 =====
+function saveState() {
+  if (historyIndex < history.length - 1) {
+    history = history.slice(0, historyIndex + 1);
+  }
+  history.push(ctx.getImageData(0, 0, mainCanvas.width, mainCanvas.height));
+  if (history.length > MAX_HISTORY) history.shift();
+  historyIndex = history.length - 1;
+}
+
+function undo() {
+  if (historyIndex > 0) {
+    historyIndex--;
+    ctx.putImageData(history[historyIndex], 0, 0);
+  }
+}
+
+function redo() {
+  if (historyIndex < history.length - 1) {
+    historyIndex++;
+    ctx.putImageData(history[historyIndex], 0, 0);
+  }
+}
+
+// ===== 畫布操作 =====
+function newCanvas() {
+  if (confirm('確定要開新檔案？目前的變更將會遺失。')) {
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fillRect(0, 0, mainCanvas.width, mainCanvas.height);
+    history = [];
+    historyIndex = -1;
+    saveState();
+  }
+}
+
+function clearCanvas() {
+  saveState();
+  ctx.fillStyle = '#FFFFFF';
+  ctx.fillRect(0, 0, mainCanvas.width, mainCanvas.height);
+  saveState();
+}
+
+function savePNG() {
+  const link = document.createElement('a');
+  link.download = '小畫家.png';
+  link.href = mainCanvas.toDataURL('image/png');
+  link.click();
+}
+
+function saveJPG() {
+  const tempC = document.createElement('canvas');
+  tempC.width = mainCanvas.width;
+  tempC.height = mainCanvas.height;
+  const tempCtx2 = tempC.getContext('2d');
+  tempCtx2.fillStyle = '#FFFFFF';
+  tempCtx2.fillRect(0, 0, tempC.width, tempC.height);
+  tempCtx2.drawImage(mainCanvas, 0, 0);
+  const link = document.createElement('a');
+  link.download = '小畫家.jpg';
+  link.href = tempC.toDataURL('image/jpeg', 0.95);
+  link.click();
+}
+
+function zoomIn() {
+  zoomLevel = Math.min(zoomLevel * 1.25, 5);
+  mainCanvas.style.transform = `scale(${zoomLevel})`;
+  mainCanvas.style.transformOrigin = 'top left';
+}
+
+function zoomOut() {
+  zoomLevel = Math.max(zoomLevel / 1.25, 0.25);
+  mainCanvas.style.transform = `scale(${zoomLevel})`;
+  mainCanvas.style.transformOrigin = 'top left';
+}
+
+function zoomReset() {
+  zoomLevel = 1;
+  mainCanvas.style.transform = 'scale(1)';
+}
+
+// ===== 下拉選單 =====
+function toggleMenu(id) {
+  document.querySelectorAll('.dropdown-content').forEach(d => {
+    if (d.id !== id) d.classList.remove('show');
+  });
+  document.getElementById(id).classList.toggle('show');
+}
+
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.dropdown')) {
+    document.querySelectorAll('.dropdown-content').forEach(d => d.classList.remove('show'));
+  }
+});
+
+// ===== 繪圖 =====
+function getPos(e) {
+  const rect = mainCanvas.getBoundingClientRect();
+  const scaleX = mainCanvas.width / rect.width;
+  const scaleY = mainCanvas.height / rect.height;
+  return {
+    x: (e.clientX - rect.left) * scaleX,
+    y: (e.clientY - rect.top) * scaleY
+  };
+}
+
+// 油漆桶 (flood fill)
+function floodFill(sx, sy, fillColor) {
+  const imageData = ctx.getImageData(0, 0, mainCanvas.width, mainCanvas.height);
+  const data = imageData.data;
+  const w = mainCanvas.width;
+  const h = mainCanvas.height;
+
+  sx = Math.floor(sx);
+  sy = Math.floor(sy);
+  if (sx < 0 || sx >= w || sy < 0 || sy >= h) return;
+
+  const targetIdx = (sy * w + sx) * 4;
+  const tr = data[targetIdx], tg = data[targetIdx+1], tb = data[targetIdx+2], ta = data[targetIdx+3];
+
+  // 解析填充色
+  const fc = document.createElement('canvas').getContext('2d');
+  fc.fillStyle = fillColor;
+  fc.fillRect(0,0,1,1);
+  const fData = fc.getImageData(0,0,1,1).data;
+  const fr = fData[0], fg = fData[1], fb = fData[2], fa = fData[3];
+
+  if (tr === fr && tg === fg && tb === fb && ta === fa) return;
+
+  const stack = [[sx, sy]];
+  const visited = new Uint8Array(w * h);
+
+  function match(i) {
+    return data[i] === tr && data[i+1] === tg && data[i+2] === tb && data[i+3] === ta;
+  }
+
+  while (stack.length > 0) {
+    const [cx, cy] = stack.pop();
+    const ci = cy * w + cx;
+    if (cx < 0 || cx >= w || cy < 0 || cy >= h) continue;
+    if (visited[ci]) continue;
+    const pi = ci * 4;
+    if (!match(pi)) continue;
+
+    visited[ci] = 1;
+    data[pi] = fr;
+    data[pi+1] = fg;
+    data[pi+2] = fb;
+    data[pi+3] = fa;
+
+    stack.push([cx+1, cy], [cx-1, cy], [cx, cy+1], [cx, cy-1]);
+  }
+
+  ctx.putImageData(imageData, 0, 0);
+}
+
+// 色彩选取
+function eyedropper(sx, sy) {
+  const pixel = ctx.getImageData(Math.floor(sx), Math.floor(sy), 1, 1).data;
+  const hex = '#' + [pixel[0], pixel[1], pixel[2]].map(v => v.toString(16).padStart(2,'0')).join('');
+  setFGColor(hex);
+  setTool('pencil');
+}
+
+// 文字
+function finishTextInput() {
+  const box = document.getElementById('textInput');
+  if (box.style.display === 'block' && box.textContent.trim()) {
+    const font = document.getElementById('textFont').value;
+    const size = parseInt(document.getElementById('textSize').value) || 20;
+    ctx.fillStyle = fgColor;
+    ctx.font = `${size}px "${font}"`;
+    ctx.textBaseline = 'top';
+    const lines = box.textContent.split('\n');
+    const lineH = size * 1.3;
+    const bx = parseInt(box.style.left) || 0;
+    const by = parseInt(box.style.top) || 0;
+    lines.forEach((line, i) => {
+      ctx.fillText(line, bx, by + i * lineH);
+    });
+    saveState();
+  }
+  box.style.display = 'none';
+  box.textContent = '';
+  box.contentEditable = false;
+}
+
+function startTextInput(x, y) {
+  finishTextInput();
+  const box = document.getElementById('textInput');
+  const containerRect = container.getBoundingClientRect();
+  const canvasRect = mainCanvas.getBoundingClientRect();
+  box.style.left = (canvasRect.left - containerRect.left + x / (mainCanvas.width / canvasRect.width)) + 'px';
+  box.style.top = (canvasRect.top - containerRect.top + y / (mainCanvas.height / canvasRect.height)) + 'px';
+  box.style.display = 'block';
+  box.contentEditable = true;
+  box.focus();
+  box.style.color = fgColor;
+  const size = parseInt(document.getElementById('textSize').value) || 20;
+  box.style.fontSize = size + 'px';
+  box.style.fontFamily = document.getElementById('textFont').value;
+}
+
+// ===== 事件處理 =====
+mainCanvas.addEventListener('mousedown', (e) => {
+  e.preventDefault();
+  const pos = getPos(e);
+  startX = pos.x;
+  startY = pos.y;
+  lastX = pos.x;
+  lastY = pos.y;
+
+  if (currentTool === 'fill') {
+    saveState();
+    floodFill(pos.x, pos.y, e.button === 2 ? bgColor : fgColor);
+    saveState();
+    return;
+  }
+
+  if (currentTool === 'eyedropper') {
+    eyedropper(pos.x, pos.y);
+    return;
+  }
+
+  if (currentTool === 'text') {
+    startTextInput(pos.x, pos.y);
+    return;
+  }
+
+  isDrawing = true;
+
+  if (currentTool === 'line' || currentTool === 'rect' || currentTool === 'ellipse' || currentTool === 'triangle' || currentTool === 'roundrect') {
+    tempCanvas = document.createElement('canvas');
+    tempCanvas.width = mainCanvas.width;
+    tempCanvas.height = mainCanvas.height;
+    tempCtx = tempCanvas.getContext('2d');
+    snapshotData = ctx.getImageData(0, 0, mainCanvas.width, mainCanvas.height);
+  }
+
+  if (currentTool === 'pencil' || currentTool === 'brush' || currentTool === 'eraser') {
+    saveState();
+    ctx.beginPath();
+    ctx.moveTo(pos.x, pos.y);
+    ctx.lineTo(pos.x + 0.1, pos.y + 0.1);
+    ctx.strokeStyle = currentTool === 'eraser' ? bgColor : fgColor;
+    ctx.lineWidth = currentTool === 'brush' ? brushSize * 2 : brushSize;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.stroke();
+  }
+});
+
+mainCanvas.addEventListener('mousemove', (e) => {
+  const pos = getPos(e);
+  document.getElementById('statusPos').textContent = `座標: ${Math.round(pos.x)}, ${Math.round(pos.y)}`;
+
+  if (!isDrawing) return;
+
+  if (currentTool === 'pencil' || currentTool === 'brush' || currentTool === 'eraser') {
+    ctx.lineTo(pos.x, pos.y);
+    ctx.strokeStyle = currentTool === 'eraser' ? bgColor : fgColor;
+    ctx.lineWidth = currentTool === 'brush' ? brushSize * 2 : brushSize;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.stroke();
+    lastX = pos.x;
+    lastY = pos.y;
+  }
+
+  if (currentTool === 'line') {
+    ctx.putImageData(snapshotData, 0, 0);
+    ctx.beginPath();
+    ctx.moveTo(startX, startY);
+    ctx.lineTo(pos.x, pos.y);
+    ctx.strokeStyle = fgColor;
+    ctx.lineWidth = brushSize;
+    ctx.lineCap = 'round';
+    ctx.stroke();
+  }
+
+  if (currentTool === 'rect') {
+    ctx.putImageData(snapshotData, 0, 0);
+    const w = pos.x - startX;
+    const h = pos.y - startY;
+    ctx.beginPath();
+    ctx.rect(startX, startY, w, h);
+    applyShapeStyle();
+  }
+
+  if (currentTool === 'roundrect') {
+    ctx.putImageData(snapshotData, 0, 0);
+    const w = pos.x - startX;
+    const h = pos.y - startY;
+    const r = Math.min(20, Math.abs(w)/2, Math.abs(h)/2);
+    ctx.beginPath();
+    ctx.roundRect(startX, startY, w, h, r);
+    applyShapeStyle();
+  }
+
+  if (currentTool === 'ellipse') {
+    ctx.putImageData(snapshotData, 0, 0);
+    const cx = (startX + pos.x) / 2;
+    const cy = (startY + pos.y) / 2;
+    const rx = Math.abs(pos.x - startX) / 2;
+    const ry = Math.abs(pos.y - startY) / 2;
+    ctx.beginPath();
+    ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2);
+    applyShapeStyle();
+  }
+
+  if (currentTool === 'triangle') {
+    ctx.putImageData(snapshotData, 0, 0);
+    const mx = (startX + pos.x) / 2;
+    ctx.beginPath();
+    ctx.moveTo(mx, startY);
+    ctx.lineTo(pos.x, pos.y);
+    ctx.lineTo(startX, pos.y);
+    ctx.closePath();
+    applyShapeStyle();
+  }
+});
+
+function applyShapeStyle() {
+  if (shapeFillMode === 'fill') {
+    ctx.fillStyle = fgColor;
+    ctx.fill();
+  } else if (shapeFillMode === 'both') {
+    ctx.fillStyle = bgColor;
+    ctx.fill();
+    ctx.strokeStyle = fgColor;
+    ctx.lineWidth = brushSize;
+    ctx.stroke();
+  } else {
+    ctx.strokeStyle = fgColor;
+    ctx.lineWidth = brushSize;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.stroke();
+  }
+}
+
+mainCanvas.addEventListener('mouseup', () => {
+  if (isDrawing) {
+    isDrawing = false;
+    if (currentTool !== 'pencil' && currentTool !== 'brush' && currentTool !== 'eraser') {
+      saveState();
+    } else {
+      saveState();
+    }
+  }
+});
+
+mainCanvas.addEventListener('mouseleave', () => {
+  if (isDrawing) {
+    isDrawing = false;
+    saveState();
+  }
+});
+
+// 右鍵不叫選單
+mainCanvas.addEventListener('contextmenu', (e) => e.preventDefault());
+
+// 鍵盤快捷鍵
+document.addEventListener('keydown', (e) => {
+  if (e.ctrlKey && e.key === 'z') { e.preventDefault(); undo(); }
+  if (e.ctrlKey && e.key === 'y') { e.preventDefault(); redo(); }
+  if (e.ctrlKey && e.key === 's') { e.preventDefault(); savePNG(); }
+  if (e.key === 'Escape') finishTextInput();
+});
+
+// 初始化
+ctx.fillStyle = '#FFFFFF';
+ctx.fillRect(0, 0, mainCanvas.width, mainCanvas.height);
+saveState();
+updateSizeLabel();
+</script>
+</body>
+</html>

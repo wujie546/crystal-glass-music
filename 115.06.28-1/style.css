@@ -1,0 +1,434 @@
+/* ==========================================
+   ULI Personal Portfolio Webpage Style
+   Theme: Apple Minimalist & Tiffany Blue Accent
+   ========================================== */
+
+:root {
+    --primary-color: #6fcbc2; /* Tiffany Blue */
+    --primary-hover: #84ded6;
+    --bg-dark-1: #080c18;
+    --bg-dark-2: #0e1628;
+    --bg-dark-3: #0c1822;
+    --card-bg: rgba(12, 18, 30, 0.65);
+    --text-white: #ffffff;
+    --text-muted: rgba(255, 255, 255, 0.75);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--bg-dark-1) 0%, var(--bg-dark-2) 50%, var(--bg-dark-3) 100%);
+    font-family: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: var(--text-white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Background Soft Glow Layers */
+.glow-container {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.35;
+    mix-blend-mode: screen;
+}
+
+.glow-1 {
+    width: 450px;
+    height: 450px;
+    background: radial-gradient(circle, rgba(111, 203, 194, 0.6) 0%, rgba(111, 203, 194, 0) 70%);
+    top: -10%;
+    left: -5%;
+    animation: drift1 22s infinite alternate ease-in-out;
+}
+
+.glow-2 {
+    width: 550px;
+    height: 550px;
+    background: radial-gradient(circle, rgba(138, 92, 246, 0.4) 0%, rgba(138, 92, 246, 0) 70%);
+    bottom: -15%;
+    right: -5%;
+    animation: drift2 28s infinite alternate ease-in-out;
+}
+
+.glow-3 {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(111, 203, 194, 0.45) 0%, rgba(111, 203, 194, 0) 70%);
+    top: 35%;
+    left: 55%;
+    animation: drift3 25s infinite alternate ease-in-out;
+}
+
+@keyframes drift1 {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(100px, 80px) scale(1.15); }
+    100% { transform: translate(-50px, -40px) scale(0.9); }
+}
+
+@keyframes drift2 {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(-80px, 120px) scale(0.85); }
+    100% { transform: translate(70px, -60px) scale(1.1); }
+}
+
+@keyframes drift3 {
+    0% { transform: translate(0, 0) scale(0.9); }
+    50% { transform: translate(90px, -90px) scale(1.1); }
+    100% { transform: translate(-80px, 50px) scale(1); }
+}
+
+/* Content Container */
+.container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 460px;
+    padding: 24px;
+    perspective: 1500px;
+}
+
+/* Glassmorphism Profile Card */
+.profile-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(32px);
+    -webkit-backdrop-filter: blur(32px);
+    border-radius: 44px;
+    padding: 56px 40px 48px;
+    text-align: center;
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.6), 
+                inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+    position: relative;
+    transform-style: preserve-3d;
+    transform: perspective(1500px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+    transition: transform 0.12s ease-out, box-shadow 0.3s ease;
+}
+
+.profile-card:hover {
+    box-shadow: 0 40px 90px rgba(111, 203, 194, 0.08),
+                0 30px 70px rgba(0, 0, 0, 0.7);
+}
+
+/* Card Glowing Edge using ::before & mask xor */
+.profile-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 44px;
+    padding: 1.5px; /* Border thickness */
+    background: linear-gradient(135deg, 
+                var(--primary-color) 0%, 
+                rgba(111, 203, 194, 0.15) 35%, 
+                rgba(111, 203, 194, 0.15) 65%, 
+                var(--primary-color) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+/* Avatar Section styling */
+.avatar-wrapper {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 32px;
+    transform: translateZ(30px);
+}
+
+.avatar-container {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    border: 2px solid rgba(255, 255, 255, 0.12);
+    background: #080c18;
+    z-index: 2;
+    transition: border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.avatar-wrapper:hover .avatar-container {
+    border-color: var(--primary-color);
+}
+
+.avatar-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.avatar-wrapper:hover img {
+    transform: scale(1.08);
+}
+
+.avatar-glow {
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(111, 203, 194, 0.7) 0%, rgba(111, 203, 194, 0) 70%);
+    opacity: 0.6;
+    filter: blur(4px);
+    z-index: 1;
+    animation: avatarPulse 4s infinite alternate ease-in-out;
+}
+
+@keyframes avatarPulse {
+    0% { transform: scale(0.97); opacity: 0.45; }
+    100% { transform: scale(1.03); opacity: 0.75; }
+}
+
+/* Upload overlay "+" button */
+.avatar-upload-btn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    color: var(--bg-dark-1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(111, 203, 194, 0.45);
+    z-index: 3;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                background-color 0.2s ease,
+                color 0.2s ease;
+}
+
+.avatar-upload-btn:hover {
+    transform: scale(1.15) rotate(90deg);
+    background-color: var(--text-white);
+    color: var(--bg-dark-1);
+}
+
+.avatar-upload-btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* Profile Info styling */
+.profile-info {
+    margin-bottom: 24px;
+    transform: translateZ(25px);
+}
+
+.name-badge-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 6px;
+}
+
+.name {
+    font-size: 34px;
+    font-weight: 700;
+    letter-spacing: -0.8px;
+    margin: 0;
+    color: var(--text-white);
+    font-family: 'Outfit', sans-serif;
+}
+
+.badge {
+    background: rgba(111, 203, 194, 0.1);
+    color: var(--primary-color);
+    font-size: 11.5px;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 30px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    border: 1px solid rgba(111, 203, 194, 0.2);
+    letter-spacing: 0.5px;
+    transform: translateZ(10px);
+}
+
+.badge-icon {
+    width: 14px;
+    height: 14px;
+}
+
+.title {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--primary-color);
+    margin: 0;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+/* Slogan styling */
+.slogan-section {
+    margin-bottom: 36px;
+    transform: translateZ(20px);
+}
+
+.slogan {
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--text-muted);
+    margin: 0;
+    font-weight: 400;
+    padding: 0 8px;
+}
+
+.slogan .highlight {
+    color: var(--primary-color);
+    font-weight: 600;
+    position: relative;
+    display: inline-block;
+}
+
+.slogan .highlight::after {
+    content: "";
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary-color), rgba(111, 203, 194, 0.2));
+    border-radius: 2px;
+}
+
+/* CTA Email button styling */
+.cta-section {
+    margin-bottom: 36px;
+    transform: translateZ(35px);
+}
+
+.email-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: var(--primary-color);
+    color: var(--bg-dark-1);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+    padding: 16px 28px;
+    border-radius: 30px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                background-color 0.25s ease;
+    box-shadow: 0 10px 24px rgba(111, 203, 194, 0.2);
+}
+
+.email-btn:hover {
+    transform: translateY(-4px) translateZ(10px);
+    background-color: var(--primary-hover);
+    box-shadow: 0 14px 32px rgba(111, 203, 194, 0.35);
+}
+
+.email-btn:active {
+    transform: translateY(-1px) translateZ(2px);
+}
+
+.btn-icon {
+    width: 18px;
+    height: 18px;
+}
+
+/* Social links styling */
+.social-section {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    transform: translateZ(25px);
+}
+
+.social-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.65);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                background-color 0.3s ease,
+                border-color 0.3s ease,
+                color 0.3s ease,
+                box-shadow 0.3s ease;
+}
+
+.social-icon svg {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s ease;
+}
+
+.social-icon:hover {
+    transform: translateY(-6px) translateZ(15px);
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--bg-dark-1);
+    box-shadow: 0 10px 24px rgba(111, 203, 194, 0.35);
+}
+
+.social-icon:hover svg {
+    transform: scale(1.12);
+}
+
+/* Accessibility Focus Ring style */
+.email-btn:focus-visible, .social-icon:focus-visible, .avatar-upload-btn:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 4px;
+}
+
+/* Responsive adjustment */
+@media (max-width: 480px) {
+    .container {
+        padding: 16px;
+    }
+    .profile-card {
+        padding: 44px 28px 36px;
+        border-radius: 36px;
+    }
+    .profile-card::before {
+        border-radius: 36px;
+    }
+    .name {
+        font-size: 30px;
+    }
+    .email-btn {
+        padding: 14px 24px;
+        font-size: 14.5px;
+    }
+    .social-icon {
+        width: 44px;
+        height: 44px;
+    }
+}

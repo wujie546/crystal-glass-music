@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibe Coding 成果展示牆 | 舟神 AI 兩日極致工坊</title>
+    <link rel="icon" type="image/png" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔮</text></svg>">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background Elements -->
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+    <div class="bg-glow bg-glow-3"></div>
+
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header animate-fade-in">
+            <div class="header-content">
+                <div class="logo-area">
+                    <span class="logo-icon">🔮</span>
+                    <div>
+                        <h1>Vibe Coding</h1>
+                        <p class="subtitle">舟神 AI 智能體 & 網頁開發極致工坊</p>
+                    </div>
+                </div>
+                <div class="workshop-badge">
+                    <span class="badge-title">2026.06.27-28 成果發表</span>
+                    <span class="badge-tag">8 核心專案</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Stats Section -->
+        <section class="stats-container animate-fade-in" style="animation-delay: 0.1s;">
+            <div class="stat-card">
+                <div class="stat-icon"><i data-lucide="folder-code"></i></div>
+                <div class="stat-info">
+                    <h3>8 個</h3>
+                    <p>全功能網頁專案</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i data-lucide="zap"></i></div>
+                <div class="stat-info">
+                    <h3>100%</h3>
+                    <p>AI 智能體協同開發</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i data-lucide="smartphone"></i></div>
+                <div class="stat-info">
+                    <h3>RWD</h3>
+                    <p>跨裝置響應式支援</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i data-lucide="sparkles"></i></div>
+                <div class="stat-info">
+                    <h3>8 倍速</h3>
+                    <p>極致開發效率革命</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Search and Filter Bar -->
+        <section class="filter-section animate-fade-in" style="animation-delay: 0.2s;">
+            <div class="search-box">
+                <i data-lucide="search" class="search-icon"></i>
+                <input type="text" id="projectSearch" placeholder="搜尋專案名稱、描述或標籤..." autocomplete="off">
+            </div>
+            <div class="filter-tabs" id="filterTabs">
+                <button class="filter-tab active" data-category="all">全部專案</button>
+                <button class="filter-tab" data-category="marketing">商業品牌/行銷</button>
+                <button class="filter-tab" data-category="tools">互動工具/課堂</button>
+                <button class="filter-tab" data-category="media">多媒體與繪圖</button>
+                <button class="filter-tab" data-category="games">遊戲體驗</button>
+            </div>
+        </section>
+
+        <!-- Project Grid -->
+        <main class="project-grid animate-fade-in" id="projectGrid" style="animation-delay: 0.3s;">
+            <!-- Rendered by JavaScript -->
+        </main>
+
+        <!-- Workshop Info Log -->
+        <section class="course-reflection animate-fade-in" style="animation-delay: 0.4s;">
+            <h2>💡 工坊開發方法論</h2>
+            <div class="method-grid">
+                <div class="method-card">
+                    <div class="method-num">01</div>
+                    <h4>Google Flow 智能體</h4>
+                    <p>利用高階 Flow 邏輯對話，將複雜的架構化繁為簡，讓智能體自動拆解多模態需求並逐步組裝。</p>
+                </div>
+                <div class="method-card">
+                    <div class="method-num">02</div>
+                    <h4>Omni Flash & Music</h4>
+                    <p>整合超感官的影音與音效，在極短時間內完成帶有聲景（Soundscape）與流暢動畫的視聽系統。</p>
+                </div>
+                <div class="method-card">
+                    <div class="method-num">03</div>
+                    <h4>Antigravity Vibe Coding</h4>
+                    <p>在無重力的 Vibe coding 環境中，以指令（Natural Language）直接控制渲染層與邏輯層，實現 8 小時內落地 8 個獨特專案的開發奇蹟。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© 2026 舟神 AI 兩日網頁極致工坊 | Vibe Coding 成果發表會</p>
+            <p class="sub-footer">Made with Antigravity AI Code Companion</p>
+        </footer>
+    </div>
+
+    <!-- Live Preview Workspace Modal -->
+    <div class="preview-modal" id="previewModal">
+        <div class="preview-backdrop" id="previewBackdrop"></div>
+        <div class="preview-container">
+            <div class="preview-header">
+                <div class="preview-title-area">
+                    <span id="previewFolderBadge" class="folder-badge">115.06.28-X</span>
+                    <h2 id="previewTitle">專案名稱</h2>
+                </div>
+                <div class="preview-controls">
+                    <!-- Simulator Controls -->
+                    <div class="simulator-toggles">
+                        <button class="sim-btn active" id="simDesktop" title="電腦版預覽 (100%)">
+                            <i data-lucide="monitor"></i> <span>電腦</span>
+                        </button>
+                        <button class="sim-btn" id="simTablet" title="平板版預覽 (768px)">
+                            <i data-lucide="tablet"></i> <span>平板</span>
+                        </button>
+                        <button class="sim-btn" id="simMobile" title="手機版預覽 (375px)">
+                            <i data-lucide="smartphone"></i> <span>手機</span>
+                        </button>
+                    </div>
+                    <div class="action-buttons">
+                        <a href="#" id="previewExternalLink" target="_blank" class="action-btn link-btn" title="在新分頁開啟">
+                            <i data-lucide="external-link"></i> 新分頁開啟
+                        </a>
+                        <button id="previewReload" class="action-btn icon-btn" title="重新整理">
+                            <i data-lucide="refresh-cw"></i>
+                        </button>
+                        <button id="previewClose" class="action-btn icon-btn close-btn" title="關閉預覽">
+                            <i data-lucide="x"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="preview-body">
+                <!-- Device simulator wrapper -->
+                <div class="device-wrapper desktop" id="deviceWrapper">
+                    <div class="device-bezel">
+                        <div class="device-screen">
+                            <iframe src="" id="previewIframe" frameborder="0"></iframe>
+                            <!-- Loading overlay inside iframe -->
+                            <div class="iframe-loader" id="iframeLoader">
+                                <div class="loader-spinner"></div>
+                                <p>載入專案中...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

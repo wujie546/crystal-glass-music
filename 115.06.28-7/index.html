@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>巴西葡萄牙語卡通學習冒險 - Português Divertido</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div id="app-container">
+    
+    <!-- 頂部狀態列 (Top Bar) -->
+    <header class="header-bar">
+      <div class="stat-item streak" title="連續練習天數">
+        <span class="stat-icon">🔥</span>
+        <span id="streak-count">1</span>
+      </div>
+      <div class="stat-item gems" title="鑽石獎勵">
+        <span class="stat-icon">💎</span>
+        <span id="gems-count">0</span>
+      </div>
+      <div class="stat-item exp" title="累積經驗值">
+        <span class="stat-icon">⚡</span>
+        <span id="exp-count">0</span>
+      </div>
+    </header>
+
+    <!-- 1. 地圖解鎖與複習視圖 (Map Screen) -->
+    <main id="screen-map" class="screen active">
+      <div class="map-header">
+        <h1 class="map-title">🇧🇷 巴西葡萄牙語大冒險</h1>
+        <p class="map-subtitle">國高中生專屬 · 玩遊戲學巴葡</p>
+      </div>
+
+      <div id="units-container">
+        <!-- 動態渲染關卡單元 -->
+      </div>
+
+      <!-- 無限複習專區 -->
+      <div class="review-section">
+        <p class="review-desc">💡 想賺更多鑽石與熟練度？隨時進行一而再、再而三的複習！</p>
+        <button id="btn-start-review" class="btn-cartoon btn-purple" style="width: 100%;">
+          🔄 無盡練習模式 (賺取鑽石 & EXP)
+        </button>
+      </div>
+    </main>
+
+    <!-- 2. 挑戰與答題視圖 (Quiz Screen) -->
+    <main id="screen-quiz" class="screen">
+      <div class="quiz-header">
+        <span id="quiz-close-btn" class="close-btn">✕</span>
+        <div class="progress-bar-container">
+          <div id="quiz-progress" class="progress-bar-fill"></div>
+        </div>
+      </div>
+
+      <div id="question-container">
+        <!-- 動態渲染題目內容 -->
+      </div>
+
+      <div style="margin-top: auto; padding-top: 20px;">
+        <button id="btn-check-answer" class="btn-cartoon btn-green" style="width: 100%;" disabled>
+          檢查答案
+        </button>
+      </div>
+
+      <!-- 底部答題回饋彈窗 -->
+      <div id="bottom-feedback" class="bottom-feedback">
+        <div class="feedback-title-row">
+          <span id="feedback-icon"></span>
+          <span id="feedback-title"></span>
+        </div>
+        <div id="feedback-msg" class="feedback-msg"></div>
+        <button id="btn-next-question" class="btn-cartoon" style="width: 100%;">
+          繼續
+        </button>
+      </div>
+    </main>
+
+    <!-- 3. 關卡結算視圖 (Summary Screen) -->
+    <main id="screen-summary" class="screen">
+      <div class="summary-container">
+        <div style="font-size: 5rem;">🎉</div>
+        <h2 class="summary-title">太棒了！練習完成！</h2>
+        <p style="color: #666; font-weight: 700;">你又向巴西葡萄牙語大師邁進了一步！</p>
+
+        <div class="summary-badges">
+          <div class="badge-box">
+            <span style="font-size: 2rem;">⚡</span>
+            <span id="earned-exp" class="badge-value" style="color: var(--primary-yellow-dark);">+15</span>
+            <span style="font-size: 0.85rem; color: #888; font-weight: 800;">經驗值</span>
+          </div>
+          <div class="badge-box">
+            <span style="font-size: 2rem;">💎</span>
+            <span id="earned-gems" class="badge-value" style="color: var(--primary-blue);">+10</span>
+            <span style="font-size: 0.85rem; color: #888; font-weight: 800;">鑽石獎勵</span>
+          </div>
+        </div>
+
+        <button id="btn-finish-summary" class="btn-cartoon btn-green" style="width: 100%; max-width: 300px; margin-top: 20px;">
+          領取獎勵並返回
+        </button>
+      </div>
+    </main>
+
+  </div>
+
+  <!-- 載入腳本 -->
+  <script src="data.js"></script>
+  <script src="audio.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

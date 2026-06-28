@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MALAN CAFÉ - 曜石黑金烘焙沙龍</title>
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="MALAN CAFÉ 曜石黑金烘焙沙龍 — 探索從翠綠精品生豆到曜石黑金熟豆的感官煉金術。">
+  <meta name="keywords" content="MALAN CAFÉ, 咖啡沙龍, 咖啡烘焙, 咖啡生豆, 熟豆對比, 奢華咖啡">
+  <meta name="author" content="MALAN CAFÉ">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Custom Tailwind Config -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            malan: {
+              black: '#0b0a09',
+              gold: '#c5a880',
+              goldLight: '#e5d5c0',
+              goldDark: '#967b57',
+              card: '#141311',
+            }
+          },
+          fontFamily: {
+            serif: ['"Playfair Display"', 'Georgia', 'serif'],
+            sans: ['"Outfit"', '"Inter"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-malan-black text-malan-goldLight overflow-x-hidden selection:bg-malan-gold selection:text-malan-black">
+
+  <!-- Custom Luxury Pointer -->
+  <div id="cursor" class="custom-cursor"></div>
+  <div id="cursor-follower" class="custom-cursor-follower"></div>
+
+  <!-- Header & Navigation -->
+  <header class="w-full py-6 px-6 md:px-12 border-b border-malan-gold/10 flex justify-between items-center z-40 relative backdrop-blur-md bg-malan-black/80 sticky top-0">
+    <div class="flex items-center gap-2">
+      <span class="font-serif text-2xl md:text-3xl font-bold tracking-[0.2em] text-malan-gold">MALAN</span>
+      <span class="text-xs uppercase tracking-[0.4em] text-malan-goldDark mt-1.5 font-light">Café</span>
+    </div>
+    <nav class="hidden md:flex items-center gap-8 text-sm uppercase tracking-widest font-medium">
+      <a href="#about" class="hover:text-malan-gold transition-colors duration-300">About</a>
+      <a href="#roast-slider" class="hover:text-malan-gold transition-colors duration-300">The Alchemy</a>
+      <a href="#salon-gallery" class="hover:text-malan-gold transition-colors duration-300">Salon Lounge</a>
+    </nav>
+    <div>
+      <a href="#salon-gallery" class="border border-malan-gold/40 hover:border-malan-gold hover:bg-malan-gold hover:text-malan-black px-6 py-2.5 rounded-full text-xs uppercase tracking-widest font-semibold transition-all duration-300 shadow-[0_0_15px_rgba(197,168,128,0.05)]">
+        Reserve Experience
+      </a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="relative min-h-[50vh] flex flex-col justify-center items-center text-center px-4 py-16 overflow-hidden">
+    <!-- Subtle Background Gold Glow -->
+    <div class="absolute w-[500px] h-[500px] bg-malan-gold/5 rounded-full blur-[120px] pointer-events-none -top-40"></div>
+    
+    <span class="text-xs md:text-sm uppercase tracking-[0.5em] text-malan-gold font-semibold mb-4">Malan Coffee Roastery</span>
+    <h1 class="font-serif text-4xl md:text-6xl lg:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-malan-goldLight via-malan-gold to-malan-goldDark tracking-wide mb-6 leading-tight">
+      曜石黑金的烘焙藝術
+    </h1>
+    <p class="max-w-2xl text-sm md:text-base text-gray-400 font-light leading-relaxed tracking-wider">
+      在馬蘭咖啡，烘焙不只是技術，而是一場感官與時間的鍊金術。<br class="hidden md:inline">
+      我們引領您見證精品咖啡豆在火候交織下，由翠綠原木化為曜石黑金的極致蛻變。
+    </p>
+  </section>
+
+  <!-- Interactive Slider Section -->
+  <section id="roast-slider" class="py-12 md:py-20 bg-gradient-to-b from-malan-black to-[#0e0c0a] relative">
+    <div class="max-w-5xl mx-auto px-4">
+      <div class="text-center mb-12">
+        <span class="text-xs uppercase tracking-[0.3em] text-malan-goldDark">Before & After</span>
+        <h2 class="font-serif text-2xl md:text-4xl text-malan-gold font-bold mt-2 tracking-widest">烘焙對比滑桿</h2>
+        <p class="text-xs md:text-sm text-gray-400 font-light mt-3 max-w-lg mx-auto">
+          拖曳中央的金色指針，動態剖析生豆與熟豆的轉變。左側為「翠綠精品生豆」，右側為「曜石黑金熟豆」。
+        </p>
+      </div>
+
+      <!-- Slider Container -->
+      <div id="slider-container" class="relative aspect-[16/10] w-full rounded-2xl overflow-hidden border border-malan-gold/20 shadow-[0_0_60px_rgba(197,168,128,0.06)] cursor-ew-resize touch-none select-none glow-hover bg-[#12100e]">
+        
+        <!-- Base Image: Right Side (Dark Roast熟豆) -->
+        <img src="images/dark_roast.png" alt="曜石黑金熟豆" class="absolute inset-0 w-full h-full object-cover">
+        
+        <!-- Clipped Image: Left Side (Green Beans生豆) -->
+        <img src="images/green_beans.png" alt="翠綠精品生豆" class="slider-after-img absolute inset-0 w-full h-full object-cover">
+
+        <!-- Labels (Glassmorphic) -->
+        <!-- Left label -->
+        <div class="absolute bottom-6 left-6 z-20 pointer-events-none bg-black/40 backdrop-blur-md text-malan-gold border border-malan-gold/20 px-4 py-2 rounded-full text-[10px] md:text-xs tracking-widest uppercase font-semibold shadow-lg">
+          翠綠精品生豆 <span class="text-white/60 ml-1">Green Beans</span>
+        </div>
+        <!-- Right label -->
+        <div class="absolute bottom-6 right-6 z-20 pointer-events-none bg-black/40 backdrop-blur-md text-malan-gold border border-malan-gold/20 px-4 py-2 rounded-full text-[10px] md:text-xs tracking-widest uppercase font-semibold shadow-lg">
+          曜石黑金熟豆 <span class="text-white/60 ml-1">Dark Roast</span>
+        </div>
+
+        <!-- Vertical Divider Line -->
+        <div class="slider-divider absolute top-0 bottom-0 w-[2px] bg-gradient-to-b from-transparent via-malan-gold to-transparent z-30 shadow-[0_0_15px_#c5a880]"></div>
+
+        <!-- Drag Handle Button -->
+        <div class="slider-divider absolute top-1/2 -translate-y-1/2 w-12 h-12 md:w-14 md:h-14 rounded-full bg-gradient-to-br from-malan-goldLight via-malan-gold to-malan-goldDark text-malan-black border border-white/20 flex items-center justify-center shadow-[0_0_25px_rgba(197,168,128,0.5)] cursor-grab active:cursor-grabbing hover:scale-105 transition-transform duration-200 z-30">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 md:h-6 md:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 7l-5 5m0 0l5 5m-5-5h18m-5-5l5 5m-5 5l5-5" />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROI Calculator & VIP Reservation Section -->
+  <section id="privilege-section" class="py-20 bg-gradient-to-b from-[#0e0c0a] to-malan-black relative">
+    <!-- Subtle Background Gold Glow -->
+    <div class="absolute w-[400px] h-[400px] bg-malan-gold/5 rounded-full blur-[100px] pointer-events-none top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
+    
+    <div class="max-w-5xl mx-auto px-4">
+      <div class="text-center mb-16">
+        <span class="text-xs uppercase tracking-[0.3em] text-malan-goldDark">Exclusive Service</span>
+        <h2 class="font-serif text-2xl md:text-4xl text-malan-gold font-bold mt-2 tracking-widest">馬蘭尊榮禮遇</h2>
+        <p class="text-xs md:text-sm text-gray-400 font-light mt-3 max-w-lg mx-auto">
+          計算大宗團購的超值折扣，或在線預約您的 VIP 專屬席位，感受馬蘭沙龍的尊貴服務。
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
+        
+        <!-- ROI Calculator Card -->
+        <div class="bg-malan-card border border-malan-gold/20 rounded-2xl p-6 md:p-8 flex flex-col justify-between shadow-[0_0_40px_rgba(197,168,128,0.03)] glow-hover">
+          <div>
+            <div class="flex items-center gap-3 mb-6">
+              <div class="w-8 h-8 rounded-full bg-malan-gold/10 flex items-center justify-center text-malan-gold">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <h3 class="font-serif text-xl text-malan-gold font-bold tracking-wider">咖啡豆 ROI 團購計算器</h3>
+            </div>
+            
+            <p class="text-xs text-gray-400 font-light mb-8">
+              團購規則：1 包原價 NT$500；2-4 包享 9 折；5 包以上享 8 折。加購精品好禮，享額外驚喜。
+            </p>
+
+            <!-- Quantity Slider -->
+            <div class="mb-8">
+              <div class="flex justify-between items-center mb-3">
+                <span class="text-xs uppercase tracking-wider text-gray-400 font-medium">購買包數</span>
+                <span class="text-sm text-malan-gold font-bold"><span id="calc-bags-val" class="text-xl mr-0.5">1</span> 包</span>
+              </div>
+              <input type="range" id="calc-bags-slider" min="1" max="15" value="1" class="w-full accent-malan-gold h-1 bg-[#1d1b18] rounded-lg appearance-none cursor-pointer">
+              <div class="flex justify-between text-[10px] text-gray-500 mt-2 font-mono">
+                <span>1 包</span>
+                <span>5 包 (8折)</span>
+                <span>10 包</span>
+                <span>15 包</span>
+              </div>
+            </div>
+
+            <!-- Add-ons Checklist -->
+            <div class="mb-8">
+              <span class="text-xs uppercase tracking-wider text-gray-400 font-medium block mb-4">尊榮加購項目</span>
+              <div class="space-y-3">
+                <label class="flex items-center gap-3 cursor-pointer group bg-malan-black/30 hover:bg-malan-black/60 border border-malan-gold/10 hover:border-malan-gold/30 rounded-xl p-3.5 transition-all duration-300">
+                  <input type="checkbox" id="addon-box" value="150" class="w-4 h-4 accent-malan-gold rounded cursor-pointer">
+                  <div class="flex-grow">
+                    <span class="text-xs md:text-sm text-malan-goldLight font-medium group-hover:text-white transition-colors">原廠掛耳包禮盒</span>
+                    <span class="text-[10px] text-gray-500 block">附精美提袋與黃金緞帶 (加購價 $150)</span>
+                  </div>
+                </label>
+                <label class="flex items-center gap-3 cursor-pointer group bg-malan-black/30 hover:bg-malan-black/60 border border-malan-gold/10 hover:border-malan-gold/30 rounded-xl p-3.5 transition-all duration-300">
+                  <input type="checkbox" id="addon-glass" value="350" class="w-4 h-4 accent-malan-gold rounded cursor-pointer">
+                  <div class="flex-grow">
+                    <span class="text-xs md:text-sm text-malan-goldLight font-medium group-hover:text-white transition-colors">雙層隔熱水晶杯</span>
+                    <span class="text-[10px] text-gray-500 block">手工吹製雙層玻璃，完美隔熱 (加購價 $350)</span>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dynamic ROI Results Display Grid (2x2) -->
+          <div class="grid grid-cols-2 gap-4 border-t border-malan-gold/10 pt-6 mt-6">
+            <div class="bg-malan-black/40 border border-malan-gold/10 rounded-xl p-4 text-center">
+              <span class="text-[10px] uppercase tracking-wider text-gray-500 block mb-1">當前單價</span>
+              <div id="calc-unit-price" class="text-lg md:text-xl font-bold font-serif text-malan-gold">NT$500</div>
+            </div>
+            <div class="bg-malan-black/40 border border-malan-gold/10 rounded-xl p-4 text-center">
+              <span class="text-[10px] uppercase tracking-wider text-gray-500 block mb-1">折扣成數</span>
+              <div id="calc-discount-rate" class="text-lg md:text-xl font-bold font-serif text-malan-gold">原價</div>
+            </div>
+            <div class="bg-malan-black/40 border border-malan-gold/10 rounded-xl p-4 text-center">
+              <span class="text-[10px] uppercase tracking-wider text-gray-500 block mb-1">加購總額</span>
+              <div id="calc-addons-total" class="text-lg md:text-xl font-bold font-serif text-malan-gold">NT$0</div>
+            </div>
+            <div class="bg-malan-black/40 border border-malan-gold/10 rounded-xl p-4 text-center col-span-2">
+              <span class="text-[10px] uppercase tracking-wider text-gray-500 block mb-1">最終結帳金額</span>
+              <div id="calc-final-total" class="text-2xl md:text-3xl font-bold font-serif text-transparent bg-clip-text bg-gradient-to-r from-malan-goldLight via-malan-gold to-malan-goldDark">NT$500</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- VIP Booking Form Card -->
+        <div class="bg-malan-card border border-malan-gold/20 rounded-2xl p-6 md:p-8 flex flex-col justify-between shadow-[0_0_40px_rgba(197,168,128,0.03)] glow-hover">
+          <form id="vip-booking-form" class="space-y-5 h-full flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-3 mb-6">
+                <div class="w-8 h-8 rounded-full bg-malan-gold/10 flex items-center justify-center text-malan-gold">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <h3 class="font-serif text-xl text-malan-gold font-bold tracking-wider">VIP 奢華訂位預約</h3>
+              </div>
+
+              <div class="space-y-4">
+                <!-- Name -->
+                <div>
+                  <label for="booking-name" class="text-[10px] uppercase tracking-wider text-gray-400 block mb-1.5 font-medium">姓名</label>
+                  <input type="text" id="booking-name" required class="bg-malan-black/50 border border-malan-gold/20 rounded-xl px-4 py-3 text-malan-goldLight placeholder-gray-600 focus:outline-none focus:border-malan-gold focus:ring-1 focus:ring-malan-gold transition-colors w-full text-xs md:text-sm" placeholder="尊榮貴賓姓名">
+                </div>
+
+                <!-- Phone -->
+                <div>
+                  <label for="booking-phone" class="text-[10px] uppercase tracking-wider text-gray-400 block mb-1.5 font-medium">聯絡電話</label>
+                  <input type="tel" id="booking-phone" required class="bg-malan-black/50 border border-malan-gold/20 rounded-xl px-4 py-3 text-malan-goldLight placeholder-gray-600 focus:outline-none focus:border-malan-gold focus:ring-1 focus:ring-malan-gold transition-colors w-full text-xs md:text-sm" placeholder="請輸入聯絡電話">
+                </div>
+
+                <!-- Date and Time Slot -->
+                <div class="grid grid-cols-2 gap-4">
+                  <div>
+                    <label for="booking-date" class="text-[10px] uppercase tracking-wider text-gray-400 block mb-1.5 font-medium">預約日期</label>
+                    <div class="relative">
+                      <input type="date" id="booking-date" required class="date-picker-input bg-malan-black/50 border border-malan-gold/20 rounded-xl px-4 py-3 pr-10 text-malan-goldLight focus:outline-none focus:border-malan-gold focus:ring-1 focus:ring-malan-gold transition-colors w-full text-xs md:text-sm cursor-pointer">
+                      <span class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-malan-gold opacity-70">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+                  <div>
+                    <label for="booking-time" class="text-[10px] uppercase tracking-wider text-gray-400 block mb-1.5 font-medium">預約時段</label>
+                    <select id="booking-time" required class="bg-malan-black/50 border border-malan-gold/20 rounded-xl px-4 py-3 text-malan-goldLight placeholder-gray-600 focus:outline-none focus:border-malan-gold focus:ring-1 focus:ring-malan-gold transition-colors w-full text-xs md:text-sm">
+                      <option value="" disabled selected>請選擇時段</option>
+                      <option value="10:00 - 13:00">上午時段 (10:00 - 13:00)</option>
+                      <option value="13:30 - 17:00">下午時段 (13:30 - 17:00)</option>
+                      <option value="18:00 - 21:00">晚間沙龍 (18:00 - 21:00)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Notes -->
+                <div>
+                  <label for="booking-notes" class="text-[10px] uppercase tracking-wider text-gray-400 block mb-1.5 font-medium">備註說明</label>
+                  <textarea id="booking-notes" rows="2" class="bg-malan-black/50 border border-malan-gold/20 rounded-xl px-4 py-3 text-malan-goldLight placeholder-gray-600 focus:outline-none focus:border-malan-gold focus:ring-1 focus:ring-malan-gold transition-colors w-full text-xs md:text-sm" placeholder="特殊偏好或餐飲禁忌..."></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="pt-6">
+              <button type="submit" id="booking-submit" class="w-full bg-gradient-to-r from-malan-goldDark via-malan-gold to-malan-goldLight text-malan-black font-bold uppercase py-3.5 px-6 rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 shadow-[0_0_20px_rgba(197,168,128,0.15)] flex items-center justify-center gap-3">
+                <span id="btn-text">確認送出預約</span>
+                <div id="btn-spinner" class="hidden w-5 h-5 border-2 border-malan-black border-t-transparent rounded-full animate-spin"></div>
+              </button>
+            </div>
+          </form>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- Custom Popup Notification Modal -->
+  <div id="notification-modal" class="fixed inset-0 z-[100] bg-malan-black/85 backdrop-blur-md flex items-center justify-center opacity-0 pointer-events-none transition-all duration-300">
+    <div class="bg-malan-card border border-malan-gold/30 p-8 rounded-2xl max-w-sm w-full mx-4 text-center shadow-[0_0_50px_rgba(197,168,128,0.15)] transform scale-95 transition-transform duration-300">
+      
+      <!-- Golden Icon Ring -->
+      <div class="w-16 h-16 rounded-full bg-malan-gold/10 border border-malan-gold/30 flex items-center justify-center text-malan-gold mx-auto mb-6">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      </div>
+
+      <h3 class="font-serif text-xl text-malan-gold font-bold mb-2">預約成立</h3>
+      <p class="text-xs text-gray-400 font-light mb-6">預約完成，專屬感官沙龍為您預留。</p>
+      
+      <!-- Frosted Glass Notification Box -->
+      <div class="bg-malan-black/40 border border-malan-gold/20 rounded-xl py-4 px-3 mb-6 backdrop-blur-sm">
+        <span class="text-[10px] uppercase tracking-wider text-gray-500 block mb-1">預約成功！您的預約代碼為</span>
+        <span id="notification-code" class="text-lg md:text-xl font-bold font-serif tracking-widest text-white">#malan-0000</span>
+      </div>
+
+      <button id="notification-close" class="w-full bg-malan-gold text-malan-black hover:bg-white hover:text-malan-black transition-colors duration-300 font-semibold py-2.5 rounded-full text-xs uppercase tracking-widest">
+        關閉視窗
+      </button>
+    </div>
+  </div>
+
+  <!-- 2x2 Salon Grid Section -->
+  <section id="salon-gallery" class="py-20 bg-malan-black relative">
+    <div class="absolute w-[600px] h-[600px] bg-malan-gold/3 rounded-full blur-[150px] pointer-events-none -bottom-80 -right-40"></div>
+
+    <div class="max-w-5xl mx-auto px-4">
+      <div class="text-center mb-16">
+        <span class="text-xs uppercase tracking-[0.3em] text-malan-goldDark">Malan Gallery</span>
+        <h2 class="font-serif text-2xl md:text-4xl text-malan-gold font-bold mt-2 tracking-widest">馬蘭沙龍現場</h2>
+        <p class="text-xs md:text-sm text-gray-400 font-light mt-3 max-w-lg mx-auto">
+          走進沉浸式奢華空間，感受每一滴黃金萃取的流動與精品咖啡社交的魅力。
+        </p>
+      </div>
+
+      <!-- 2x2 Responsive Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        
+        <!-- Grid Item 1 -->
+        <div class="grid-item relative overflow-hidden rounded-xl border border-malan-gold/10 group cursor-pointer aspect-[4/3] bg-malan-card" 
+             data-index="0" 
+             data-title="沙龍雅境 | Salon Architecture" 
+             data-desc="黑大理石與奢華黃銅交織的精緻吧台，為咖啡愛好者打造的專屬私密品飲空間。">
+          <img src="images/salon_interior.png" alt="沙龍雅境" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-500"></div>
+          
+          <!-- Hover Icon Overlay -->
+          <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20">
+            <div class="w-12 h-12 rounded-full border border-malan-gold/60 bg-malan-black/40 backdrop-blur-sm flex items-center justify-center text-malan-gold transform scale-90 group-hover:scale-100 transition-transform duration-500">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
+              </svg>
+            </div>
+          </div>
+
+          <div class="absolute bottom-6 left-6 z-20">
+            <span class="text-xs text-malan-goldDark uppercase tracking-widest block mb-1">01 / ARCHITECTURE</span>
+            <h3 class="font-serif text-lg md:text-xl text-malan-goldLight font-bold">沙龍雅境</h3>
+          </div>
+        </div>
+
+        <!-- Grid Item 2 -->
+        <div class="grid-item relative overflow-hidden rounded-xl border border-malan-gold/10 group cursor-pointer aspect-[4/3] bg-malan-card" 
+             data-index="1" 
+             data-title="咖啡匠心 | Barista Craftsmanship" 
+             data-desc="咖啡師在奢華黑金杯中緩緩注入黃金奶泡，以極致專注呈現如藝術品般拉花。">
+          <img src="images/salon_barista.png" alt="咖啡匠心" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-500"></div>
+          
+          <!-- Hover Icon Overlay -->
+          <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20">
+            <div class="w-12 h-12 rounded-full border border-malan-gold/60 bg-malan-black/40 backdrop-blur-sm flex items-center justify-center text-malan-gold transform scale-90 group-hover:scale-100 transition-transform duration-500">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
+              </svg>
+            </div>
+          </div>
+
+          <div class="absolute bottom-6 left-6 z-20">
+            <span class="text-xs text-malan-goldDark uppercase tracking-widest block mb-1">02 / CRAFT</span>
+            <h3 class="font-serif text-lg md:text-xl text-malan-goldLight font-bold">咖啡匠心</h3>
+          </div>
+        </div>
+
+        <!-- Grid Item 3 -->
+        <div class="grid-item relative overflow-hidden rounded-xl border border-malan-gold/10 group cursor-pointer aspect-[4/3] bg-malan-card" 
+             data-index="2" 
+             data-title="虹吸精萃 | Siphon Extraction" 
+             data-desc="高溫水汽與新鮮咖啡粉的完美化學作用，於剔透玻璃球中激盪出濃郁咖啡的琥珀色流光。">
+          <img src="images/salon_brewing.png" alt="虹吸精萃" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-500"></div>
+          
+          <!-- Hover Icon Overlay -->
+          <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20">
+            <div class="w-12 h-12 rounded-full border border-malan-gold/60 bg-malan-black/40 backdrop-blur-sm flex items-center justify-center text-malan-gold transform scale-90 group-hover:scale-100 transition-transform duration-500">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
+              </svg>
+            </div>
+          </div>
+
+          <div class="absolute bottom-6 left-6 z-20">
+            <span class="text-xs text-malan-goldDark uppercase tracking-widest block mb-1">03 / EXTRACT</span>
+            <h3 class="font-serif text-lg md:text-xl text-malan-goldLight font-bold">虹吸精萃</h3>
+          </div>
+        </div>
+
+        <!-- Grid Item 4 -->
+        <div class="grid-item relative overflow-hidden rounded-xl border border-malan-gold/10 group cursor-pointer aspect-[4/3] bg-malan-card" 
+             data-index="3" 
+             data-title="聚落密語 | Private Lounge" 
+             data-desc="在奢華且舒適的絲絨座椅上，與氣味相投的朋友共享精緻下午，留下醇厚的回甘記憶。">
+          <img src="images/salon_guests.png" alt="聚落密語" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-500"></div>
+          
+          <!-- Hover Icon Overlay -->
+          <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20">
+            <div class="w-12 h-12 rounded-full border border-malan-gold/60 bg-malan-black/40 backdrop-blur-sm flex items-center justify-center text-malan-gold transform scale-90 group-hover:scale-100 transition-transform duration-500">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
+              </svg>
+            </div>
+          </div>
+
+          <div class="absolute bottom-6 left-6 z-20">
+            <span class="text-xs text-malan-goldDark uppercase tracking-widest block mb-1">04 / SOCIAL</span>
+            <h3 class="font-serif text-lg md:text-xl text-malan-goldLight font-bold">聚落密語</h3>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Fullscreen Lightbox Modal -->
+  <div id="lightbox" class="lightbox-overlay fixed inset-0 z-50 bg-malan-black/95 backdrop-blur-lg flex flex-col justify-between p-6">
+    <!-- Lightbox Header -->
+    <div class="flex justify-between items-center w-full max-w-7xl mx-auto z-10">
+      <div class="font-serif text-lg text-malan-gold font-semibold tracking-widest">MALAN CAFÉ</div>
+      <button id="lightbox-close" class="text-malan-gold hover:text-white transition-colors duration-300 p-2 focus:outline-none">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Lightbox Content Container -->
+    <div class="flex-grow flex items-center justify-center relative max-w-7xl w-full mx-auto my-4">
+      
+      <!-- Previous Arrow -->
+      <button id="lightbox-prev" class="absolute left-0 md:left-4 z-10 text-malan-gold hover:text-white hover:scale-110 bg-malan-black/50 hover:bg-malan-gold/10 p-3 rounded-full border border-malan-gold/20 transition-all duration-300">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+
+      <!-- Main Zooming Image -->
+      <div class="relative max-h-[65vh] max-w-[85vw] md:max-h-[75vh] md:max-w-[70vw] overflow-hidden rounded-xl border border-malan-gold/20 shadow-[0_0_80px_rgba(197,168,128,0.15)] flex justify-center items-center bg-black">
+        <img id="lightbox-img" src="" alt="" class="lightbox-img max-h-[65vh] md:max-h-[75vh] object-contain">
+      </div>
+
+      <!-- Next Arrow -->
+      <button id="lightbox-next" class="absolute right-0 md:right-4 z-10 text-malan-gold hover:text-white hover:scale-110 bg-malan-black/50 hover:bg-malan-gold/10 p-3 rounded-full border border-malan-gold/20 transition-all duration-300">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+
+    </div>
+
+    <!-- Lightbox Footer (Captions) -->
+    <div class="w-full max-w-3xl mx-auto text-center z-10 pb-6">
+      <h4 id="lightbox-title" class="font-serif text-xl md:text-2xl text-malan-gold font-bold tracking-wide"></h4>
+      <p id="lightbox-desc" class="text-xs md:text-sm text-gray-400 font-light mt-2 leading-relaxed max-w-xl mx-auto"></p>
+    </div>
+  </div>
+
+  <!-- Luxury Footer -->
+  <footer class="py-12 border-t border-malan-gold/10 text-center text-xs text-malan-goldDark tracking-widest bg-[#080706]">
+    <div class="mb-4">
+      <span class="font-serif text-lg font-bold tracking-widest text-malan-gold">MALAN CAFÉ</span>
+    </div>
+    <p class="mb-2">台北市大安區奢華黑金烘焙沙龍區</p>
+    <p>© 2026 MALAN CAFÉ. ALL RIGHTS RESERVED.</p>
+  </footer>
+
+  <!-- Script Execution -->
+  <script>
+    // --- 1. Custom Smooth Follower Cursor ---
+    const cursor = document.getElementById('cursor');
+    const follower = document.getElementById('cursor-follower');
+    
+    let mouseX = 0, mouseY = 0;
+    let followerX = 0, followerY = 0;
+    let hasMoved = false;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      
+      if (!hasMoved) {
+        // Position immediately on first movement
+        cursor.style.opacity = '1';
+        follower.style.opacity = '1';
+        followerX = mouseX;
+        followerY = mouseY;
+        hasMoved = true;
+      }
+      
+      cursor.style.left = mouseX + 'px';
+      cursor.style.top = mouseY + 'px';
+    });
+
+    // Smooth LERP (Linear Interpolation) animation for the follower ring
+    function animateFollower() {
+      if (hasMoved) {
+        followerX += (mouseX - followerX) * 0.15;
+        followerY += (mouseY - followerY) * 0.15;
+        follower.style.left = followerX + 'px';
+        follower.style.top = followerY + 'px';
+      }
+      requestAnimationFrame(animateFollower);
+    }
+    animateFollower();
+
+    // Trigger cursor expansion on hovering interactive components
+    const updateHoverables = () => {
+      const hoverables = document.querySelectorAll('a, button, .grid-item, #slider-container, input[type="range"], input[type="checkbox"], select, label, textarea, input[type="text"], input[type="tel"], input[type="date"]');
+      hoverables.forEach(el => {
+        // Prevent duplicate listener binding
+        if (el.dataset.hasCursorListener) return;
+        
+        el.addEventListener('mouseenter', () => document.body.classList.add('hover-active'));
+        el.addEventListener('mouseleave', () => document.body.classList.remove('hover-active'));
+        el.dataset.hasCursorListener = 'true';
+      });
+    };
+    updateHoverables();
+
+
+    // --- 2. Before/After Roasting Slider ---
+    const sliderContainer = document.getElementById('slider-container');
+    let isDragging = false;
+
+    function updateSliderPosition(clientX) {
+      const rect = sliderContainer.getBoundingClientRect();
+      let x = clientX - rect.left;
+      let percentage = (x / rect.width) * 100;
+
+      // Clamp percentage between 0% and 100%
+      percentage = Math.max(0, Math.min(100, percentage));
+      
+      // Update custom property to dynamically change clip-path and divider/handle position
+      sliderContainer.style.setProperty('--clip-percentage', `${percentage}%`);
+    }
+
+    // Mouse Listeners
+    sliderContainer.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      updateSliderPosition(e.clientX);
+      document.body.classList.add('hover-active'); // Force cursor active
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      updateSliderPosition(e.clientX);
+    });
+
+    window.addEventListener('mouseup', () => {
+      if (isDragging) {
+        isDragging = false;
+      }
+    });
+
+    // Touch Listeners (Mobile optimized)
+    sliderContainer.addEventListener('touchstart', (e) => {
+      isDragging = true;
+      updateSliderPosition(e.touches[0].clientX);
+    }, { passive: true });
+
+    window.addEventListener('touchmove', (e) => {
+      if (!isDragging) return;
+      updateSliderPosition(e.touches[0].clientX);
+    }, { passive: true });
+
+    window.addEventListener('touchend', () => {
+      isDragging = false;
+    });
+
+
+    // --- 3. Fullscreen Lightbox with 2x2 Grid Integration ---
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxTitle = document.getElementById('lightbox-title');
+    const lightboxDesc = document.getElementById('lightbox-desc');
+    const closeBtn = document.getElementById('lightbox-close');
+    
+    const prevBtn = document.getElementById('lightbox-prev');
+    const nextBtn = document.getElementById('lightbox-next');
+    
+    // Collect all grid items data
+    const gridItems = Array.from(document.querySelectorAll('.grid-item'));
+    const galleryData = gridItems.map(item => ({
+      src: item.querySelector('img').src,
+      title: item.dataset.title,
+      desc: item.dataset.desc
+    }));
+    
+    let currentGalleryIndex = 0;
+
+    function openLightbox(index) {
+      currentGalleryIndex = index;
+      updateLightboxContent();
+      
+      lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden'; // Lock background scrolling
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('active');
+      document.body.style.overflow = ''; // Unlock background scrolling
+    }
+
+    function updateLightboxContent() {
+      const currentItem = galleryData[currentGalleryIndex];
+      
+      // Elegant transition fade-out/fade-in
+      lightboxImg.style.opacity = '0';
+      lightboxImg.style.transform = 'scale(0.97)';
+      
+      setTimeout(() => {
+        lightboxImg.src = currentItem.src;
+        lightboxImg.alt = currentItem.title;
+        lightboxTitle.textContent = currentItem.title;
+        lightboxDesc.textContent = currentItem.desc;
+        
+        lightboxImg.style.opacity = '1';
+        lightboxImg.style.transform = 'scale(1)';
+      }, 150);
+    }
+
+    function showNext() {
+      currentGalleryIndex = (currentGalleryIndex + 1) % galleryData.length;
+      updateLightboxContent();
+    }
+
+    function showPrev() {
+      currentGalleryIndex = (currentGalleryIndex - 1 + galleryData.length) % galleryData.length;
+      updateLightboxContent();
+    }
+
+    // Grid Item Click Triggers
+    gridItems.forEach((item, index) => {
+      item.addEventListener('click', () => {
+        openLightbox(index);
+      });
+    });
+
+    // Control Listeners
+    closeBtn.addEventListener('click', closeLightbox);
+    
+    // Close when clicking outside the main image on the backdrop overlay
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox || e.target.id === 'lightbox-img-wrap' || e.target.tagName === 'BUTTON' || e.target.closest('button')) {
+        // Only close if it's the background backdrop click
+        if (e.target === lightbox) {
+          closeLightbox();
+        }
+      }
+    });
+
+    nextBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      showNext();
+    });
+    
+    prevBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      showPrev();
+    });
+
+    // Keyboard controls (Esc to close, Left/Right arrows to navigate)
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('active')) return;
+      
+      if (e.key === 'Escape') {
+        closeLightbox();
+      } else if (e.key === 'ArrowRight') {
+        showNext();
+      } else if (e.key === 'ArrowLeft') {
+        showPrev();
+      }
+    });
+
+    // --- 4. ROI Calculator Logic ---
+    const calcSlider = document.getElementById('calc-bags-slider');
+    const addonBox = document.getElementById('addon-box');
+    const addonGlass = document.getElementById('addon-glass');
+
+    function recalculateROI() {
+      const bags = parseInt(calcSlider.value);
+      const isBoxChecked = addonBox.checked;
+      const isGlassChecked = addonGlass.checked;
+
+      // Update bags value label
+      document.getElementById('calc-bags-val').textContent = bags;
+
+      // Discount Logic: 1 bag = $500; 2-4 bags = 90% (9折); 5+ bags = 80% (8折)
+      let unitPrice = 500;
+      let discountRate = "原價";
+      
+      if (bags >= 2 && bags <= 4) {
+        unitPrice = 450;
+        discountRate = "9 折 (10% Off)";
+      } else if (bags >= 5) {
+        unitPrice = 400;
+        discountRate = "8 折 (20% Off)";
+      }
+
+      // Addon Calculation
+      const addonsTotal = (isBoxChecked ? 150 : 0) + (isGlassChecked ? 350 : 0);
+      
+      // Final Total
+      const finalTotal = (bags * unitPrice) + addonsTotal;
+
+      // Update display elements
+      document.getElementById('calc-unit-price').textContent = `NT$${unitPrice}`;
+      document.getElementById('calc-discount-rate').textContent = discountRate;
+      document.getElementById('calc-addons-total').textContent = `NT$${addonsTotal}`;
+      document.getElementById('calc-final-total').textContent = `NT$${finalTotal.toLocaleString()}`;
+    }
+
+    // Attach Calculator Event Listeners
+    calcSlider.addEventListener('input', recalculateROI);
+    addonBox.addEventListener('change', recalculateROI);
+    addonGlass.addEventListener('change', recalculateROI);
+
+    // Initial run
+    recalculateROI();
+
+
+    // --- 5. VIP Reservation Form & Custom Pop-up Modal ---
+    const bookingForm = document.getElementById('vip-booking-form');
+    const bookingSubmit = document.getElementById('booking-submit');
+    const btnText = document.getElementById('btn-text');
+    const btnSpinner = document.getElementById('btn-spinner');
+    const notificationModal = document.getElementById('notification-modal');
+    const notificationClose = document.getElementById('notification-close');
+    const notificationCode = document.getElementById('notification-code');
+
+    bookingForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      // Disable button and trigger elegant rotating loading animation
+      bookingSubmit.disabled = true;
+      btnText.textContent = "尊榮預約處理中...";
+      btnSpinner.classList.remove('hidden');
+
+      // Simulate API request (1.5 seconds)
+      setTimeout(() => {
+        // Reset button states
+        bookingSubmit.disabled = false;
+        btnText.textContent = "確認送出預約";
+        btnSpinner.classList.add('hidden');
+
+        // Generate unique 4-digit code
+        const randomCode = Math.floor(1000 + Math.random() * 9000);
+        notificationCode.textContent = `#malan-${randomCode}`;
+
+        // Show modal with scale transition
+        const innerCard = notificationModal.querySelector('div');
+        notificationModal.classList.remove('opacity-0', 'pointer-events-none');
+        notificationModal.classList.add('opacity-100', 'pointer-events-auto');
+        innerCard.classList.remove('scale-95');
+        innerCard.classList.add('scale-100');
+
+        // Reset reservation form fields
+        bookingForm.reset();
+        recalculateROI(); // Reset calculator values too
+        updateHoverables(); // Re-bind new handlers if needed
+      }, 1500);
+    });
+
+    // Close Modal Event Listener
+    notificationClose.addEventListener('click', () => {
+      const innerCard = notificationModal.querySelector('div');
+      notificationModal.classList.add('opacity-0', 'pointer-events-none');
+      notificationModal.classList.remove('opacity-100', 'pointer-events-auto');
+      innerCard.classList.add('scale-95');
+      innerCard.classList.remove('scale-100');
+    });
+
+    // Also close Modal when clicking outer backdrop
+    notificationModal.addEventListener('click', (e) => {
+      if (e.target === notificationModal) {
+        notificationClose.click();
+      }
+    });
+  </script>
+</body>
+</html>
