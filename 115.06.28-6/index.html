@@ -157,6 +157,65 @@
             50% { transform: scale(1.2); opacity: 1; }
             100% { transform: scale(0.95); opacity: 0.8; }
         }
+
+        /* 響應式設計 - 手機適配 */
+        @media (max-width: 768px) {
+            .ui-container {
+                bottom: 20px;
+                padding: 10px 16px;
+                gap: 10px;
+                border-radius: 25px;
+                width: calc(100% - 32px);
+                max-width: 400px;
+            }
+            .btn {
+                padding: 10px 16px;
+                font-size: 13px;
+                gap: 6px;
+            }
+            .custom-select {
+                padding: 10px 28px 10px 14px;
+                font-size: 12px;
+            }
+            .status-badge {
+                top: 16px;
+                right: 16px;
+                padding: 6px 12px;
+                font-size: 11px;
+            }
+            .status-dot {
+                width: 6px;
+                height: 6px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .ui-container {
+                flex-direction: column;
+                align-items: center;
+                gap: 8px;
+                padding: 12px;
+                bottom: 16px;
+                width: calc(100% - 24px);
+            }
+            .btn {
+                width: 100%;
+                justify-content: center;
+                padding: 12px 20px;
+            }
+            .custom-select {
+                width: 100%;
+            }
+            .select-wrapper {
+                width: 100%;
+            }
+            .status-badge {
+                top: 12px;
+                right: 12px;
+                padding: 5px 10px;
+                font-size: 10px;
+            }
+        }
     </style>
     <!-- Tone.js CDN v14 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
@@ -173,10 +232,10 @@
     <div class="ui-container">
         <div class="select-wrapper">
             <select id="presetSelect" class="custom-select">
-                <option value="celestial">🔮 星空夢幻 (Celestial Dream)</option>
-                <option value="musicbox">❄️ 冰雪八音盒 (Frozen Music Box)</option>
-                <option value="waterdrops">🌊 琉璃水滴 (Glass Waterdrops)</option>
-                <option value="cosmic">🌌 深海空靈 (Cosmic Ambient)</option>
+                <option value="celestial">🔮 星空夢幻</option>
+                <option value="musicbox">❄️ 冰雪八音盒</option>
+                <option value="waterdrops">🌊 琉璃水滴</option>
+                <option value="cosmic">🌌 深海空靈</option>
             </select>
         </div>
         <button class="btn btn-play" id="btnPlay">
